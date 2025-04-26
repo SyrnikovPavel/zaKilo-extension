@@ -1,8 +1,8 @@
 class AuchanProductCard {
     // селекторы и константы для «Ашан»
-    static CARD_SELECTOR     = 'div.styles_productCard__Qy_9h.styles_catalogListPage_item__NAAw9';
-    static PRICE_SEL         = '.styles_productCardContentPanel_price__MqlWB';
-    static NAME_SEL          = '.styles_productCardContentPanel_name__072Y7';
+    static CARD_SELECTOR     = 'div[class*=styles_productCard][class*=styles_catalogListPage_item]';
+    static PRICE_SEL         = '[class*=styles_productCardContentPanel_price]';
+    static NAME_SEL          = '[class*=styles_productCardContentPanel_name]';
     static UNIT_PRICE_SEL    = '[data-testid="unit-price"]';
 
     static mutationObserver  = null;

@@ -1,10 +1,10 @@
 class CooperProductCard {
     // Универсальный селектор для всех карточек продукта
-    static CARD_SELECTOR     = 'div.ProductCard_root__zO_B9';
+    static CARD_SELECTOR     = 'div[class*=ProductCard_root]';
     // Акционная или обычная цена внутри блока цены
-    static PRICE_NEW_SEL     = '.ProductCard_price__LnWjd .ProductCardPrice_accent__6BZDJ.CommonProductCard_priceText__S5e9l, .ProductCard_price__LnWjd .ProductCardPrice_price__zSwp0.CommonProductCard_priceText__S5e9l';
+    static PRICE_NEW_SEL     = '[class*=ProductCard_price] [class*=ProductCardPrice_accent][class*=CommonProductCard_priceText], [class*=ProductCard_price] [class*=ProductCardPrice_price][class*=CommonProductCard_priceText]';
     // Вес или уже готовая unit-цена
-    static VOLUME_SEL        = 'div.ProductCard_volume__RHLb0';
+    static VOLUME_SEL        = 'div[class*=ProductCard_volume]';
     // Наблюдаем за всем телом документа, чтобы ловить любые динамические вставки
     static OBSERVE_CONTAINER = 'body';
     // Метка unit-price
@@ -97,7 +97,7 @@ class CooperProductCard {
                 fontSize: '18px'
             });
 
-            const priceContainer = priceEl.closest('.ProductCard_price__LnWjd.CommonProductCard_price__XM9uA');
+            const priceContainer = priceEl.closest('[class*=ProductCard_price][class*=CommonProductCard_price]');
             if (!priceContainer) throw new Error('Контейнер цены не найден');
             priceContainer.querySelectorAll(CooperProductCard.UNIT_PRICE_SEL).forEach(e => e.remove());
             priceContainer.appendChild(span);
@@ -106,7 +106,7 @@ class CooperProductCard {
         // --- /Специальный кейс ---
 
         // Обычный расчёт по весу или объёму
-        const priceContainer = priceEl.closest('.ProductCard_price__LnWjd.CommonProductCard_price__XM9uA');
+        const priceContainer = priceEl.closest('[class*=ProductCard_price][class*=CommonProductCard_price]');
         if (!priceContainer) throw new Error('Контейнер цены не найден');
 
         // Получаем числовую цену из priceEl

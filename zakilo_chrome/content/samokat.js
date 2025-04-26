@@ -1,12 +1,12 @@
 class SamokatProductCard {
-    static CARD_SELECTOR      = '.ProductCard_root__OCLMl';
+    static CARD_SELECTOR      = '[class*=ProductCard_root]';
     // Выбираем либо акционную цену (последний span), либо обычную
-    static PRICE_NEW_SEL      = '.ProductCardActions_text__3Uohy span span:last-child';
-    static WEIGHT_SEL         = '.ProductCard_specification__Y0xA6 span:first-child';
+    static PRICE_NEW_SEL      = '[class*=ProductCardActions_text] span span:last-child';
+    static WEIGHT_SEL         = '[class*=ProductCard_specification] span:first-child';
     static UNIT_PRICE_SEL     = '[data-testid="unit-price"]';
     static OBSERVE_CONTAINER  = '.swiper-wrapper';
     // Контейнер для вставки цены за единицу
-    static DETAILS_SEL        = '.ProductCard_details__S6PcT';
+    static DETAILS_SEL        = '[class*=ProductCard_details]';
 
     static init() {
         SamokatProductCard.log('=== ИНИЦИАЛИЗАЦИЯ SamokatProductCard ===');

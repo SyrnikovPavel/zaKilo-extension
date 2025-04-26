@@ -5,13 +5,13 @@ class ProductCard {
     constructor(cardEl) {
         this.cardEl = cardEl;
         this.logPrefix = '[pyaterochka]:';
-        this.priceSel = '.priceContainer_priceContainerCatalog__LIxni';
-        this.weightSel = '.mainInformation_weight__o6cXn';
+        this.priceSel = '[class*=priceContainer_priceContainerCatalog]';
+        this.weightSel = '[class*=mainInformation_weight]';
     }
 
     static runAll() {
         const cards = document.querySelectorAll(
-            '[data-qa^="product-card-"], .productFilterGrid_cardContainer__oyUJZ'
+            '[data-qa^="product-card-"], [class*=productFilterGrid_cardContainer]'
         );
         console.log('economist:', 'стартовая инициализация, найдено карточек:', cards.length);
         cards.forEach(el => ProductCard._tryProcess(el));
@@ -30,7 +30,7 @@ class ProductCard {
     }
 
     static watchMutations() {
-        const container = document.querySelector('.chakra-stack.catalogPage_container__zsZjW');
+        const container = document.querySelector('[class*=chakra-stack.catalogPage_container]');
         if (!container) {
             console.error('economist:', 'контейнер каталога не найден для наблюдения');
             return;
@@ -39,11 +39,11 @@ class ProductCard {
             muts.forEach(m => {
                 m.addedNodes.forEach(n => {
                     if (!(n instanceof HTMLElement)) return;
-                    if (n.matches('[data-qa^="product-card-"], .productFilterGrid_cardContainer__oyUJZ')) {
+                    if (n.matches('[data-qa^="product-card-"], [class*=productFilterGrid_cardContainer]')) {
                         console.log('economist:', 'обнаружена новая карточка');
                         ProductCard._tryProcess(n);
                     }
-                    n.querySelectorAll?.('[data-qa^="product-card-"], .productFilterGrid_cardContainer__oyUJZ')
+                    n.querySelectorAll?.('[data-qa^="product-card-"], [class*=productFilterGrid_cardContainer]')
                         .forEach(el => {
                             console.log('economist:', 'обнаружена вложенная карточка');
                             ProductCard._tryProcess(el);
@@ -95,7 +95,7 @@ class ProductCard {
         const containers = this.cardEl.querySelectorAll(this.priceSel);
         containers.forEach(pc => {
             pc.querySelectorAll('p').forEach(p => {
-                if (p.classList.contains('priceContainer_cent__KeKyD')) {
+                if ([...p.classList].some(cls => cls.startsWith('priceContainer_cent'))) {
                     p.style.fontSize = '0.7em';
                 } else {
                     p.style.fontSize = '0.96em';
@@ -139,8 +139,8 @@ class ProductCard {
     _getEffectivePrice() {
         const pc = this.cardEl.querySelector(this.priceSel);
         if (!pc) throw new Error('price container не найден');
-        const disc = pc.querySelector('.priceContainer_discountInternalContainer__MhRsi');
-        const block = disc || pc.querySelector('.priceContainer_totalContainer__rvZ0b');
+        const disc = pc.querySelector('[class*=priceContainer_discountInternalContainer]');
+        const block = disc || pc.querySelector('[class*=priceContainer_totalContainer]');
         if (!block) throw new Error('блок с цифрами цены не найден');
         const ps = block.querySelectorAll('p');
         const whole = parseInt(ps[0]?.textContent, 10);

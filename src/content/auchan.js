@@ -3,6 +3,7 @@ class AuchanProductCard {
   static CARD_SELECTOR = "div[class*=styles_productCard][class*=styles_catalogListPage_item]";
   static PRICE_SEL = "[class*=styles_productCardContentPanel_price]";
   static NAME_SEL = "[class*=styles_productCardContentPanel_name]";
+  static PRICE_UNIT_TEXT_SEL = '[class*="styles_productCardContentPanel_type"]';
   static UNIT_PRICE_SEL = '[data-testid="unit-price"]';
 
   static mutationObserver = null;
@@ -100,6 +101,7 @@ class AuchanProductCard {
 
   process() {
     const priceEl = this.cardEl.querySelector(AuchanProductCard.PRICE_SEL);
+    const unitTextEl = this.cardEl.querySelector(AuchanProductCard.PRICE_UNIT_TEXT_SEL);
     const nameEl = this.cardEl.querySelector(AuchanProductCard.NAME_SEL);
     if (!priceEl || !nameEl) {
       throw new Error("priceEl или nameEl не найдены");
@@ -119,8 +121,11 @@ class AuchanProductCard {
     const nameText = nameEl.textContent.trim();
     this.log("name=", nameText);
 
+    const unitText = unitTextEl?.textContent.trim() ?? "";
+    this.log("unitText=", unitText);
+
     // извлекаем количество и единицу из названия
-    const { unitLabel, multiplier } = this._parseQuantityFromName(nameText);
+    const { unitLabel, multiplier } = this._parseQuantityFromName(`${unitText} ${nameText}`);
     this.log("parsed unit:", unitLabel, "multiplier=", multiplier);
 
     // цена за единицу, округлённая вверх

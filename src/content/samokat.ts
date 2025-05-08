@@ -1,5 +1,5 @@
-import { SamokatStrategy } from "../strategies";
-import { BaseParser } from "../core/BaseParser";
+import { SamokatStrategy } from "@/strategies";
+import { BaseParser } from "@/core/BaseParser";
 
 // Автозапуск
 (function (): void {

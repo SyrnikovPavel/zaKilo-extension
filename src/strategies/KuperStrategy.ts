@@ -1,6 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
-import { getUnitParsedWeight } from "@/utils/converters";
-import { UnitLabel } from "@/types/IStrategy";
+import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
+import type { UnitLabel } from "@/types/IStrategy";
 
 export class KuperStrategy extends ParserStrategy {
   constructor() {
@@ -8,8 +8,8 @@ export class KuperStrategy extends ParserStrategy {
     this.strategyName = "Kuper";
     this.selectors = {
       card: "[class*=ProductCardGridLayout]",
-      name: '[class*="ProductCard_title"]',
-      volume: '[class*="volume"]',
+      name: "[data-qa$=_title]",
+      volume: "[data-qa$=_volume]",
       price: "[class*=priceText]",
       unitPrice: '[data-testid="unit-price"]',
     };
@@ -17,18 +17,24 @@ export class KuperStrategy extends ParserStrategy {
 
   parsePrice(cardEl: HTMLElement): number {
     const priceString = cardEl.querySelector(this.selectors.price)?.textContent;
-    const priceRegex = /(\d+,\d+)/;
-    const match = priceString?.match(priceRegex);
-    const textPrice = match ? match[1].replace(",", ".") : null;
-    const v = parseFloat(textPrice ?? "");
-    if (isNaN(v)) throw new Error("Цена не распознана: " + priceString);
-    return v;
+    const fallbackPriceRegex = /(\d+,\d+)/;
+    const fallbackMatch = priceString?.match(fallbackPriceRegex);
+    const fallbackTextPrice = fallbackMatch ? fallbackMatch[1].replace(",", ".") : null;
+    const fallbackV = parseFloat(fallbackTextPrice ?? "");
+    if (isNaN(fallbackV)) throw new Error("Цена не распознана: " + priceString);
+    return fallbackV;
   }
 
   parseQuantity(cardEl: HTMLElement): UnitLabel {
-    const nameText = cardEl.querySelector(this.selectors.name)?.textContent?.trim() ?? "";
-    const weightRegex = /(\d+(?:,\d+)?)\s*([а-яА-Яa-zA-Z]+)/;
-    const match = nameText.match(weightRegex);
+    const volumeText = this.selectors?.volume ? cardEl.querySelector(this.selectors.volume)?.textContent || "" : "";
+    const nameText = cardEl.querySelector(this.selectors.name)?.getAttribute("title") || "";
+    const volumeString = nameText || volumeText;
+
+    this.log("volumeString", volumeText);
+    this.log("nameText", nameText);
+
+    const s = volumeString.trim().toLowerCase().replace(",", ".");
+    const match = s.match(/([\d]+(?:\.\d+)?)\s*(г|гр|кг|мл|л|шт)\.?/i);
 
     if (match) {
       const totalText = match[1].replace(",", ".");
@@ -36,7 +42,7 @@ export class KuperStrategy extends ParserStrategy {
       if (isNaN(total)) throw new Error("Неверный формат числа: " + totalText);
       const unit = match[2];
 
-      this.log("totalText, total, unit", totalText, total, unit);
+      this.log("Name: totalText, total, unit", totalText, total, unit);
       return getUnitParsedWeight(total, unit);
     } else {
       throw new Error("Обьем не распознан.");
@@ -57,7 +63,7 @@ export class KuperStrategy extends ParserStrategy {
 
     const span = document.createElement("span");
     span.setAttribute("data-testid", "unit-price");
-    span.textContent = `${Math.ceil(unitPrice)}\u2009₽ за ${unitLabel}`;
+    span.textContent = `${roundNumber(unitPrice, 0)}\u2009₽ за ${unitLabel}`;
     Object.assign(span.style, {
       display: "inline-block",
       marginLeft: "0.5em",

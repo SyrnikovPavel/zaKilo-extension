@@ -1,6 +1,6 @@
-import { getUnitParsedWeight } from "@/utils/converters";
+import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
 import { ParserStrategy } from "@/core/ParserStrategy";
-import { UnitLabel } from "@/types/IStrategy";
+import type { UnitLabel } from "@/types/IStrategy";
 
 export class OzonStrategy extends ParserStrategy {
   constructor() {
@@ -16,8 +16,8 @@ export class OzonStrategy extends ParserStrategy {
 
   parsePrice(cardEl: HTMLElement): number {
     const priceString = cardEl.querySelector(this.selectors.price)?.textContent;
-    console.log("parsed price text", priceString);
-    const num = priceString?.replace(/[^\d,\.]/g, "").replace(",", ".") ?? "";
+    this.log("parsed price text", priceString);
+    const num = priceString?.replace(/[^\d,.]/g, "").replace(",", ".") ?? "";
     const v = parseFloat(num);
     if (isNaN(v)) throw new Error("cannot parse price: " + priceString);
     return v;
@@ -49,7 +49,7 @@ export class OzonStrategy extends ParserStrategy {
 
     const span = document.createElement("span");
     span.setAttribute("data-testid", "unit-price");
-    span.textContent = `${Math.ceil(unitPrice)}\u2009₽ за ${unitLabel}`;
+    span.textContent = `${roundNumber(unitPrice, 0)}\u2009₽ за ${unitLabel}`;
     Object.assign(span.style, {
       display: "inline-block",
       marginLeft: "0.5em",

@@ -8,6 +8,7 @@ export interface IStrategy {
   selectors: {
     card: string;
     price: string;
+    discountPrice?: string;
     name: string;
     unitPrice: string;
     volume?: string;

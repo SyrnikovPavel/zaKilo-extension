@@ -1,0 +1,22 @@
+{
+  "html": "<div class=\"pl-stack-item pl-stack-item_size-6 pl-stack-item_size-4-m pl-stack-item_size-3-ml unit-catalog-product-preview\"><div class=\"unit-catalog-product-preview-content\"><div class=\"unit-catalog-product-preview-image\"><img src=\"product3.jpg\" alt=\"Product 3\"></div><div class=\"unit-catalog-product-preview-title\">Молоко Домик в деревне</div><div class=\"unit-catalog-product-preview-prices\"><div class=\"unit-catalog-product-preview-prices__sale\"><span>89.90 ₽</span></div></div></div></div>",
+  "expectedParsedPrice": 89.9,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 шт",
+    "multiplier": 1
+  },
+  "expectedUnitPrice": {
+    "price": "90",
+    "label": "1 шт",
+    "styles": {
+      "display": "block",
+      "color": "rgb(0, 0, 0)",
+      "backgroundColor": "rgb(230, 245, 239)",
+      "padding": "2px 6px 2px 0.5px",
+      "borderRadius": "4px",
+      "fontWeight": "600",
+      "fontSize": "14px",
+      "marginBottom": "4px"
+    }
+  }
+}

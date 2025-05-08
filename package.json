@@ -1,38 +1,70 @@
 {
   "name": "zakilo-extension",
   "version": "1.0.0",
-  "description": "",
+  "description": "Расширение для сравнения цен на продуктов в онлайн-магазинах",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SyrnikovPavel/zaKilo-extension.git"
+  },
+  "keywords": [
+    "browser extension",
+    "price comparison"
+  ],
   "main": "index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev:chrome": "vite --mode=chrome",
     "dev:firefox": "vite --mode=firefox",
     "build:chrome": "vite build --mode=chrome",
     "build:firefox": "vite build --mode=firefox",
-    "pack:firefox": "vite build --mode=firefox && web-ext build --source-dir=dist/firefox --artifacts-dir=ext-dist --overwrite-dest --filename=zaKilo-firefox-{version}.zip",
-    "pack:chrome": "vite build --mode=chrome && web-ext build --source-dir=dist/chrome --artifacts-dir=ext-dist --overwrite-dest --filename=zaKilo-chrome-{version}.zip",
+    "prepack:firefox": "npm run lint && npm run test:ci && npm run build:firefox",
+    "prepack:chrome": "npm run lint && npm run test:ci && npm run build:chrome",
+    "pack:firefox": "web-ext build --source-dir=dist/firefox --artifacts-dir=ext-dist --overwrite-dest --filename=zaKilo-firefox-{version}.zip",
+    "pack:chrome": "web-ext build --source-dir=dist/chrome --artifacts-dir=ext-dist --overwrite-dest --filename=zaKilo-chrome-{version}.zip",
     "prepare": "husky",
     "type-check": "tsc --noEmit",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint  . --ext .ts,.tsx --fix",
+    "test": "vitest",
+    "test:ci": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "verify": "npm run type-check && npm run lint && npm run test"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/chrome": "^0.0.317",
+    "@testing-library/dom": "^9.3.4",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.1",
+    "@types/chrome": "^0.0.319",
     "@types/firefox-webext-browser": "^120.0.4",
+    "@types/jest": "^29.5.12",
     "@types/node": "^22.15.3",
+    "@types/testing-library__jest-dom": "^5.14.9",
+    "@typescript-eslint/eslint-plugin": "^7.3.0",
+    "@typescript-eslint/parser": "^7.3.0",
     "husky": "^9.1.7",
+    "jsdom": "^24.1.3",
     "lint-staged": "^15.5.1",
     "lodash-es": "^4.17.21",
     "prettier": "3.5.3",
     "typescript": "^5.3.3",
+    "vite": "^6.3.3",
     "vite-plugin-web-extension": "^4.4.3",
-    "web-ext": "^8.6.0"
-  },
-  "dependencies": {
-    "convert-units": "^2.3.4",
-    "vite": "^6.3.3"
+    "vitest": "^1.3.1",
+    "web-ext": "^8.6.0",
+    "eslint-plugin-vitest": "0.5.4"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "*.{js,json,md}": "prettier --write",
+    "src/**/*.ts": [
+      "eslint --fix",
+      "vitest related --run"
+    ]
+  },
+  "resolutions": {
+    "lodash-es": "^4.17.21"
   }
 }

@@ -1,4 +1,6 @@
-import { IStrategy, UnitLabel } from "@/types/IStrategy";
+import type { IStrategy, UnitLabel } from "@/types/IStrategy";
+
+const isDev = import.meta.env.DEV;
 
 export abstract class ParserStrategy implements IStrategy {
   public strategyName: string;
@@ -47,8 +49,10 @@ export abstract class ParserStrategy implements IStrategy {
     this.renderUnitPrice(cardEl, unitPrice, unitLabel);
   }
 
-  log(...args: any[]): void {
-    console.log(`[${this.strategyName}]`, ...args);
+  log(...args: unknown[]): void {
+    if (isDev) {
+      console.log(`[${this.strategyName}]`, ...args);
+    }
   }
 
   abstract parsePrice(cardEl: HTMLElement): number;

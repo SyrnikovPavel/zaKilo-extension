@@ -1,0 +1,22 @@
+{
+  "html": "<div class=\"pl-stack-item pl-stack-item_size-6 pl-stack-item_size-4-m pl-stack-item_size-3-ml unit-catalog-product-preview\"><div class=\"unit-catalog-product-preview-content\"><div class=\"unit-catalog-product-preview-image\"><img src=\"product4.jpg\" alt=\"Product 4\"></div><div class=\"unit-catalog-product-preview-title\">Сыр Российский 300 г</div><div class=\"unit-catalog-product-preview-prices\"><div class=\"unit-catalog-product-preview-prices__regular\"><span>199.90 ₽</span></div></div></div></div>",
+  "expectedParsedPrice": 199.9,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 кг",
+    "multiplier": 3.333
+  },
+  "expectedUnitPrice": {
+    "price": "666",
+    "label": "1 кг",
+    "styles": {
+      "display": "block",
+      "color": "rgb(0, 0, 0)",
+      "backgroundColor": "rgb(230, 245, 239)",
+      "padding": "2px 6px 2px 0.5px",
+      "borderRadius": "4px",
+      "fontWeight": "600",
+      "fontSize": "14px",
+      "marginBottom": "4px"
+    }
+  }
+}

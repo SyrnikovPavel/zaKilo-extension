@@ -1,14 +1,16 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
-import { getUnitParsedWeight } from "@/utils/converters";
+import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
+import type { UnitLabel } from "@/types/IStrategy";
 
 export class PerekrestokStrategy extends ParserStrategy {
   constructor() {
     super();
     this.strategyName = "Perekrestok";
     this.selectors = {
-      card: "[class*=product-card]",
-      price: "[class*=product-card__price]",
-      name: "[class*=product-card__title]",
+      card: "[data-testid=product-card-root]",
+      price: "[data-testid=product-card-price]",
+      name: "[data-testid=product-card-name]",
+      volume: "[data-testid=product-card-weight]",
       unitPrice: "[data-testid='unit-price']",
     };
   }
@@ -19,14 +21,14 @@ export class PerekrestokStrategy extends ParserStrategy {
 
   parsePrice(cardEl: HTMLElement): number {
     const priceString = cardEl.querySelector(this.selectors.price)?.textContent;
-    console.log("parsed price text", priceString);
+    this.log("parsed price text", priceString);
     const priceRegex = /(?<!\d)([0-9]{1,3}(?:[ \u00A0][0-9]{3})*(?:[.,][0-9]+)?)[ \u00A0]*₽/u;
     const match = priceString?.match(priceRegex);
     if (!match) {
       throw new Error("Цена не распознана: " + priceString);
     }
 
-    let textPrice = match[1].replace(/[ \u00A0]/g, "").replace(",", ".");
+    const textPrice = match[1].replace(/[ \u00A0]/g, "").replace(",", ".");
 
     const value = parseFloat(textPrice);
     if (isNaN(value)) {
@@ -36,9 +38,15 @@ export class PerekrestokStrategy extends ParserStrategy {
     return value;
   }
 
-  parseQuantity(cardEl: HTMLElement): { unitLabel: string; multiplier: number } {
-    const nameText = cardEl.querySelector(this.selectors.name)?.textContent?.trim() ?? "";
-    const s = nameText.trim().toLowerCase().replace(/,/g, ".");
+  parseQuantity(cardEl: HTMLElement): UnitLabel {
+    let quantityText: string;
+    if (this.selectors?.volume) {
+      quantityText = cardEl.querySelector(this.selectors.volume)?.textContent?.trim() ?? "";
+    } else {
+      quantityText = cardEl.querySelector(this.selectors.name)?.textContent?.trim() ?? "";
+    }
+
+    const s = quantityText.trim().toLowerCase().replace(/,/g, ".");
     const mulMatch = s.match(/^(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)\s*([^\s\d]+)/i);
     let total: number;
     let unit: string;
@@ -49,7 +57,7 @@ export class PerekrestokStrategy extends ParserStrategy {
       total = count * per;
     } else {
       const m = s.match(/([\d.]+)\s*([^\s\d]+)/);
-      if (!m) throw new Error(`не распознано количество: "${nameText}"`);
+      if (!m) throw new Error(`не распознано количество: "${quantityText}"`);
       total = parseFloat(m[1]);
       unit = m[2];
     }
@@ -70,7 +78,7 @@ export class PerekrestokStrategy extends ParserStrategy {
 
     const span = document.createElement("span");
     span.setAttribute("data-testid", "unit-price");
-    span.textContent = `${Math.ceil(unitPrice)}\u2009₽ за ${unitLabel}`;
+    span.textContent = `${roundNumber(unitPrice, 0)}\u2009₽ за ${unitLabel}`;
     Object.assign(span.style, {
       display: "inline-block",
       marginLeft: "0.5em",

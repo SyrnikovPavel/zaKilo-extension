@@ -1,5 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
-import { getUnitParsedWeight } from "@/utils/converters";
+import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
+import type { UnitLabel } from "@/types/IStrategy";
 
 export class MagnitStrategy extends ParserStrategy {
   constructor() {
@@ -33,7 +34,7 @@ export class MagnitStrategy extends ParserStrategy {
     return v;
   }
 
-  parseQuantity(cardEl: HTMLElement): { unitLabel: string; multiplier: number } {
+  parseQuantity(cardEl: HTMLElement): UnitLabel {
     const nameText = cardEl.querySelector(this.selectors.name)?.textContent?.trim() ?? "";
     const s = nameText.trim().toLowerCase().replace(",", ".");
     const match = s.match(/([\d]+(?:\.\d+)?)\s*(г|гр|кг|мл|л|шт)\.?/i);
@@ -51,7 +52,7 @@ export class MagnitStrategy extends ParserStrategy {
 
     priceContainer.querySelectorAll(this.selectors.unitPrice).forEach((el: Element) => el.remove());
 
-    const displayValue = unitPrice < 20 ? unitPrice.toFixed(2) : Math.ceil(unitPrice).toString();
+    const displayValue = unitPrice < 20 ? roundNumber(unitPrice, 2).toString() : roundNumber(unitPrice, 0).toString();
 
     const span = document.createElement("span");
     span.setAttribute("data-testid", "unit-price");

@@ -1,5 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
-import { getUnitParsedWeight } from "@/utils/converters";
+import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
+import type { UnitLabel } from "@/types/IStrategy";
 
 export class DeliveryClubStrategy extends ParserStrategy {
   constructor() {
@@ -17,14 +18,14 @@ export class DeliveryClubStrategy extends ParserStrategy {
 
   parsePrice(cardEl: HTMLElement): number {
     const priceString = cardEl.querySelector(this.selectors.price)?.textContent;
-    console.log("parsed price text", priceString);
+    this.log("parsed price text", priceString);
     const cleaned = priceString?.replace(/\s|&thinsp;/g, "").replace("₽", "") ?? "";
     const v = parseFloat(cleaned);
     if (isNaN(v)) throw new Error("Invalid price: " + priceString);
     return v;
   }
 
-  parseQuantity(cardEl: HTMLElement): { unitLabel: string; multiplier: number } {
+  parseQuantity(cardEl: HTMLElement): UnitLabel {
     const nameText = cardEl.querySelector(this.selectors.name)?.textContent?.trim() ?? "";
     const s = nameText.toLowerCase().replace(",", ".").trim();
     const m = s.match(/([\d.]+)\s*([^\s\d]+)/);
@@ -46,8 +47,8 @@ export class DeliveryClubStrategy extends ParserStrategy {
 
     const span = document.createElement("span");
     span.className = priceEl.className;
-    span.setAttribute("data-testid", "product-card-unit-price");
-    span.textContent = `${Math.ceil(unitPrice)}\u2009₽ за ${unitLabel}`;
+    span.setAttribute("data-testid", "unit-price");
+    span.textContent = `${roundNumber(unitPrice, 0)}\u2009₽ за ${unitLabel}`;
 
     Object.assign(span.style, {
       color: "#000",

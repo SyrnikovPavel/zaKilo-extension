@@ -1,0 +1,21 @@
+{
+  "html": "<li id=\"menu-item-container____-174959914\" class=\"DesktopGoodsList_item\" style=\"width: 20%;\"><div class=\"rkjwj46 m151l8zm mr653he fuxiwef cizts8j\" description=\"\" data-testid=\"product-card-root\"><a class=\"f1d17p5r\" aria-disabled=\"false\" aria-label=\"Яйцо куриное пищевое столовое С1 Пр!ст, 10шт 600г, Цена 80 ₽, 600г\" href=\"/retail/perekrestok/product/18dfb068-c531-4c75-8381-a5c3861a398f?placeSlug=perekrestok_spgoy\"></a><div class=\"pgsitxe\"><div data-testid=\"product-card-image\" class=\"r1ezd24x h50098 p1c991bq\"><div class=\"c3o0i8d\"></div><img alt=\"\" class=\"ihl0wqb c9wvbk5 vjnm2iq azyrrf3\" data-testid=\"smart-image-img\" loading=\"lazy\" src=\"https://avatars.mds.yandex.net/get-eda/3502800/af3f7bf6f6377eb3773e52b8a79915a5/400x400nocrop\"></div><div class=\"tnu5xf4\"></div></div><div class=\"d1chzqrb\"><div class=\"p1jdj7iy\" aria-hidden=\"true\"><span class=\"rwsi3wr lei6h7l b15kf5nf pgfrt5h UiKitText_root UiKitText_Body2 UiKitText_Medium UiKitText_Text\" data-testid=\"product-card-price\">80 ₽</span></div><div class=\"nsawvb6 UiKitText_root UiKitText_Body2Loose UiKitText_Regular UiKitText_Text\" data-testid=\"product-card-name\" title=\"Яйцо куриное пищевое столовое С1 Пр!ст, 10шт 600г\">Яйцо куриное пищевое столовое С1 Пр!ст, 10шт 600г</div><div data-testid=\"product-card-weight\" class=\"wpsxpb7\">600&nbsp;г</div></div><div class=\"r1aagnt5 f109et8u o8joec4 sn2tx7y d2nn5af\" role=\"presentation\"><button class=\"b17t8bbz o31qs5d\" data-testid=\"amount-select-increment\" aria-label=\"В корзину\"><svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" class=\"UiKitUiKitIcon_m UiKitImgIcon UiKitUiKitIcon_root iqkno4o UiKitImgIcon\" role=\"img\" data-testid=\"plus-mini-icon\" aria-hidden=\"true\"><path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M12 6a1 1 0 0 0-1 1v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7a1 1 0 0 0-1-1\" clip-rule=\"evenodd\"></path></svg></button></div></div></li>",
+  "expectedParsedPrice": 80,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 кг",
+    "multiplier": 1.667
+  },
+  "expectedUnitPrice": {
+    "price": 133,
+    "label": "1 кг",
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.5em",
+      "color": "rgb(0, 0, 0)",
+      "padding": "2px 6px",
+      "borderRadius": "4px",
+      "fontWeight": "900",
+      "fontSize": "calc(0.95vw)"
+    }
+  }
+}

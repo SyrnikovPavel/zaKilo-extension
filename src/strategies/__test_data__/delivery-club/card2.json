@@ -1,0 +1,19 @@
+{
+  "html": "<li id=\"menu-item-container____-39004669\" class=\"DesktopGoodsList_item\" style=\"width: 20%;\"><div class=\"rkjwj46 m151l8zm mr653he fuxiwef cizts8j\" totaloldprice=\"1253\" description=\"\" data-testid=\"product-card-root\"><a class=\"f1d17p5r\" aria-disabled=\"false\" aria-label=\"Помидоры Черри сладкие 500г, Цена 980 ₽ вместо 1  253 ₽, 500г\" href=\"/retail/azbuka_vkusa/product/b35a2dd9-035f-4c89-bdc4-d2a0d59878e1?placeSlug=azbukavkusa_trubnaya_ploshhad_2\"></a><div class=\"pgsitxe\"><div data-testid=\"product-card-image\" class=\"r1ezd24x h50098 p1c991bq\"><div class=\"c3o0i8d\"></div><img alt=\"\" class=\"ihl0wqb c9wvbk5 vjnm2iq azyrrf3\" data-testid=\"smart-image-img\" loading=\"lazy\" src=\"https://avatars.mds.yandex.net/get-eda/3401132/cae7d0fc34252b6787dcc67a7795ffd2/400x400nocrop\"></div><div class=\"tnu5xf4\"><div class=\"UiKitToken_root UiKitToken_root-d424 UiKitToken_l t6x2tc5 UiKitToken_leftRotated\"><span class=\"UiKitToken_content\" data-testid=\"card-badge-icon\">–21%</span></div></div></div><div class=\"d1chzqrb\"><div class=\"p1jdj7iy\" aria-hidden=\"true\"><span class=\"rwsi3wr lei6h7l n1hnneev pgfrt5h UiKitText_root UiKitText_Body2 UiKitText_Medium UiKitText_Text\" data-testid=\"product-card-price\">980 ₽</span><span class=\"rwsi3wr lei6h7l o4ypzi7 UiKitText_root UiKitText_Body2 UiKitText_Medium UiKitText_Text\" data-testid=\"product-card-old-price\">1  253 ₽</span></div><div class=\"nsawvb6 UiKitText_root UiKitText_Body2Loose UiKitText_Regular UiKitText_Text\" data-testid=\"product-card-name\" title=\"Помидоры Черри сладкие 500г\">Помидоры Черри сладкие 500г</div><div data-testid=\"product-card-weight\" class=\"wpsxpb7\">500&nbsp;г</div></div><div class=\"r1aagnt5 f109et8u o8joec4 sn2tx7y d2nn5af\" role=\"presentation\"><button class=\"b17t8bbz o31qs5d\" data-testid=\"amount-select-increment\" aria-label=\"В корзину\"><svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" class=\"UiKitUiKitIcon_m UiKitImgIcon UiKitUiKitIcon_root iqkno4o UiKitImgIcon\" role=\"img\" data-testid=\"plus-mini-icon\" aria-hidden=\"true\"><path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M12 6a1 1 0 0 0-1 1v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4V7a1 1 0 0 0-1-1\" clip-rule=\"evenodd\"></path></svg></button></div></div></li>",
+  "expectedParsedPrice": 980,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 кг",
+    "multiplier": 2
+  },
+  "expectedUnitPrice": {
+    "price": 1960,
+    "label": "1 кг",
+    "styles": {
+      "color": "rgb(0, 0, 0)",
+      "backgroundColor": "rgba(0, 198, 106, 0.1)",
+      "padding": "2px 6px 2px 0.5px",
+      "borderRadius": "0.25em",
+      "fontWeight": "500"
+    }
+  }
+}

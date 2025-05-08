@@ -1,0 +1,21 @@
+{
+  "html": "<div class=\"productFilterGrid_cardContainer__oyUJZ css-0\"><div class=\"chakra-stack productCard_container__7EuBL productFilterGrid_productCardContainer__ll7_p css-8g8ihq\" id=\"1\" data-qa=\"product-card-3062835\"><a class=\"chakra-link productCard_insteadContainer__DuFrN css-13jvj27\" data-qa=\"product-card-link\" href=\"/product/yaytso-kurinoe-okskoe-stolovoe-so-10sht--3062835/\"><div class=\"imageContainer_container__OGi7F productFilterGrid_productCardImage__Z_tDT css-k008qs\"><div class=\"imageContainer_nonProductImg__bxRAi css-k008qs\" style=\"background-image: url(&quot;https://photos.okolo.app/product/1162345-main/320x320.jpeg?updated_at=2025-02-17T14:05:41.708Z&quot;); filter: none;\"></div><div class=\"imageContainer_labels__cjF_a css-k008qs\"></div></div><div class=\"mainInformation_container__U8GuI css-k008qs\"><div class=\"ratingContainer_ratingContainer__KgIgo css-k008qs\"><svg viewBox=\"0 0 16 16\" focusable=\"false\" class=\"chakra-icon css-1vwaaeb\"><path d=\"M14.3909 7.33701C14.513 7.21193 14.5992 7.0538 14.6399 6.88039C14.6806 6.70699 14.6742 6.52517 14.6214 6.35535C14.5686 6.18552 14.4715 6.03443 14.341 5.91902C14.2105 5.80362 14.0518 5.72848 13.8827 5.70203L10.6261 5.20745C10.5522 5.19651 10.482 5.16697 10.4215 5.12138C10.361 5.07579 10.312 5.01552 10.2788 4.94576L8.82302 1.86546C8.74672 1.70565 8.62926 1.57122 8.48382 1.47725C8.33838 1.38328 8.17072 1.3335 7.99968 1.3335C7.82863 1.3335 7.66098 1.38328 7.51553 1.47725C7.37009 1.57122 7.25263 1.70565 7.17633 1.86546L5.71823 4.94576C5.68524 5.01521 5.63663 5.07529 5.57655 5.12086C5.51648 5.16644 5.44672 5.19615 5.37326 5.20745L2.11668 5.70203C1.94754 5.72848 1.78881 5.80362 1.65831 5.91902C1.52782 6.03443 1.43072 6.18552 1.37793 6.35535C1.32514 6.52517 1.31874 6.70699 1.35945 6.88039C1.40017 7.0538 1.48638 7.21193 1.60842 7.33701L3.96575 9.73787C4.01736 9.79277 4.05558 9.85981 4.07719 9.93334C4.0988 10.0069 4.10318 10.0848 4.08994 10.1604L3.54028 13.5456C3.51173 13.722 3.53092 13.9032 3.59571 14.0688C3.66049 14.2344 3.76829 14.3778 3.90696 14.4829C4.04563 14.5879 4.20965 14.6505 4.38054 14.6635C4.55143 14.6765 4.7224 14.6394 4.87419 14.5564L7.78579 12.9574C7.85176 12.9212 7.92516 12.9023 7.99968 12.9023C8.07419 12.9023 8.14759 12.9212 8.21356 12.9574L11.1252 14.5564C11.2578 14.6292 11.4054 14.6671 11.5552 14.6668C11.6888 14.6664 11.8207 14.6355 11.9417 14.5765C12.0627 14.5174 12.17 14.4315 12.256 14.3248C12.342 14.2181 12.4047 14.0932 12.4398 13.9586C12.4749 13.824 12.4814 13.6831 12.4591 13.5456L11.9094 10.1604C11.8967 10.0838 11.9019 10.0051 11.9248 9.93107C11.9476 9.85705 11.9873 9.78993 12.0405 9.73547L14.3909 7.33701Z\"></path></svg><p class=\"chakra-text ratingContainer_ratingCount__sNN1_ css-1jdqp4k\">4,93</p></div><p class=\"chakra-text mainInformation_title__ziiEa css-1jdqp4k\">Яйцо куриное Окское столовое СО 10шт.</p><p class=\"chakra-text mainInformation_weight__o6cXn css-15thl77\">10 шт</p></div><div class=\"priceContainer_priceContainerCatalog__LIxni css-k008qs\"><div class=\"priceContainer_totalContainer__rvZ0b css-k008qs\"><p class=\"chakra-text priceContainer_price__AY8C_ css-6uvdux\">139</p><p class=\"chakra-text priceContainer_cent__KeKyD css-6uvdux\">99</p><p class=\"chakra-text priceContainer_price__AY8C_ css-6uvdux\">₽</p></div></div></a><div class=\"cartButton_container__0Gymf css-0\" data-qa=\"cart-button-container\"><button type=\"button\" class=\"chakra-button productCard_catalogCartButton__Infvk css-12yf9td\" data-qa=\"cart-button-add-button\"><p class=\"chakra-text css-1isddck\">В корзину</p></button></div></div></div>",
+  "expectedParsedPrice": 140,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 шт",
+    "multiplier": 0.1
+  },
+  "expectedUnitPrice": {
+    "price": 14,
+    "label": "1 шт",
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.5em",
+      "color": "rgb(0, 0, 0)",
+      "padding": "2px 6px",
+      "borderRadius": "4px",
+      "fontWeight": "900",
+      "fontSize": "calc(0.95vw)"
+    }
+  }
+}

@@ -141,4 +141,6 @@ dist
 .idea
 .vscode
 
+.aider*
+
 ext-dist

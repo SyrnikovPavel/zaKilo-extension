@@ -1,6 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
-import { getUnitParsedWeight } from "@/utils/converters";
-import { UnitLabel } from "@/types/IStrategy";
+import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
+import type { UnitLabel } from "@/types/IStrategy";
 
 export class SamokatStrategy extends ParserStrategy {
   constructor() {
@@ -16,9 +16,9 @@ export class SamokatStrategy extends ParserStrategy {
   }
 
   parsePrice(cardEl: HTMLElement): number {
-    const priceString = cardEl.querySelector(this.selectors.price)?.textContent;
-    console.log("parsed price text", priceString);
-    const num = priceString?.replace(/[^\d,\.]/g, "").replace(",", ".") ?? "";
+    const priceString = this.selectors?.price ? cardEl.querySelector(this.selectors.price)?.textContent || "" : "";
+    this.log("parsed price text", priceString);
+    const num = priceString?.replace(/[^\d,.]/g, "").replace(",", ".") ?? "";
     const v = parseFloat(num);
     if (isNaN(v)) throw new Error("Цена не распознана: " + priceString);
     return v;
@@ -56,8 +56,8 @@ export class SamokatStrategy extends ParserStrategy {
     if (!details) throw new Error("Не найдены необходимые элементы");
 
     const rawUnit = unitPrice;
-    const calculatedUnitPrice = rawUnit < 20 ? Math.round(rawUnit * 100) / 100 : Math.ceil(rawUnit);
-    const displayPrice = rawUnit < 20 ? calculatedUnitPrice.toFixed(2) : calculatedUnitPrice;
+    const calculatedUnitPrice = rawUnit < 20 ? roundNumber(rawUnit, 2) : roundNumber(rawUnit, 0);
+    const displayPrice = rawUnit < 20 ? calculatedUnitPrice.toString() : calculatedUnitPrice;
 
     // Удаляем старые
     details.querySelectorAll(this.selectors.unitPrice).forEach((e) => e.remove());

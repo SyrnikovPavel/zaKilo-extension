@@ -1,4 +1,4 @@
-import { IStrategy } from "@/types/IStrategy";
+import { type IStrategy } from "@/types/IStrategy";
 
 export class BaseParser {
   private strategy: IStrategy;

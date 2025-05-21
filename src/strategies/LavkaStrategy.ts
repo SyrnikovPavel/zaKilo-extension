@@ -1,6 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
-import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
 import type { UnitLabel } from "@/types/IStrategy";
+import { getConvertedUnit, roundNumber } from "@/utils/converters";
 
 export class LavkaStrategy extends ParserStrategy {
   constructor() {
@@ -8,7 +8,8 @@ export class LavkaStrategy extends ParserStrategy {
     this.strategyName = "Lavka";
     this.selectors = {
       card: "[class*=p19kkpiw]",
-      price: "[class*=phcb3a1] [class*=b15aiivf][style*='color'], [class*=t18stym3][class*=bw441np][class*=r88klks][style*='color']",
+      price:
+        "[class*=phcb3a1] [class*=b15aiivf][style*='color'], [class*=t18stym3][class*=bw441np][class*=r88klks][style*='color']",
       name: "[class*=m12g4kzj]",
       unitPrice: '[data-testid="unit-price"]',
     };
@@ -30,7 +31,7 @@ export class LavkaStrategy extends ParserStrategy {
     if (!m) throw new Error("Invalid quantity: " + nameText);
     const num = parseFloat(m[1]);
     const unit = m[2];
-    return getUnitParsedWeight(num, unit);
+    return getConvertedUnit(num, unit);
   }
 
   renderUnitPrice(cardEl: HTMLElement, unitPrice: number, unitLabel: string): void {
@@ -60,7 +61,7 @@ export class LavkaStrategy extends ParserStrategy {
       backgroundColor: "rgba(0, 198, 106, 0.1)",
       padding: "2px 6px 2px 0.5px",
       borderRadius: "0.25em",
-      fontWeight: "500"
+      fontWeight: "500",
     });
 
     wrapper.appendChild(span);

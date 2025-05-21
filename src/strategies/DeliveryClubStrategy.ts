@@ -1,6 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
-import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
 import type { UnitLabel } from "@/types/IStrategy";
+import { getConvertedUnit, roundNumber } from "@/utils/converters";
 
 export class DeliveryClubStrategy extends ParserStrategy {
   constructor() {
@@ -32,7 +32,7 @@ export class DeliveryClubStrategy extends ParserStrategy {
     if (!m) throw new Error("Invalid quantity: " + nameText);
     const num = parseFloat(m[1]);
     const unit = m[2];
-    return getUnitParsedWeight(num, unit);
+    return getConvertedUnit(num, unit);
   }
 
   renderUnitPrice(cardEl: HTMLElement, unitPrice: number, unitLabel: string): void {

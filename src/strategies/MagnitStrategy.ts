@@ -1,6 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
-import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
 import type { UnitLabel } from "@/types/IStrategy";
+import { getConvertedUnit, roundNumber } from "@/utils/converters";
 
 export class MagnitStrategy extends ParserStrategy {
   constructor() {
@@ -43,7 +43,7 @@ export class MagnitStrategy extends ParserStrategy {
     }
     const value = parseFloat(match[1]);
     const unit = match[2];
-    return getUnitParsedWeight(value, unit);
+    return getConvertedUnit(value, unit);
   }
 
   renderUnitPrice(cardEl: HTMLElement, unitPrice: number, unitLabel: string): void {

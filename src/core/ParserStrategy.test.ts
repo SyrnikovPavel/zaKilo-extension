@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { ParserStrategy } from "./ParserStrategy";
 import type { UnitLabel } from "@/types/IStrategy";
-import { getUnitParsedWeight } from "@/utils/converters";
+import { getConvertedUnit } from "@/utils/converters";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { ParserStrategy } from "./ParserStrategy";
 
 // Concrete implementation of ParserStrategy for testing
 class TestStrategy extends ParserStrategy {
@@ -31,7 +31,7 @@ class TestStrategy extends ParserStrategy {
     const value = parseFloat(match[1]);
     const unit = match[2];
 
-    return getUnitParsedWeight(value, unit);
+    return getConvertedUnit(value, unit);
   }
 
   renderUnitPrice(cardEl: HTMLElement, unitPrice: number, unitLabel: string): void {

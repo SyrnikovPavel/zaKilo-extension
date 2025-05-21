@@ -9,7 +9,7 @@
 1. Клонировать репозиторий и установить зависимости:
 
    ```bash
-   git clone https://github.com/ruimage/zaKilo-extension.git
+   git clone https://github.com/SyrnikovPavel/zaKilo-extension.git
    cd zaKilo-extension
    npm ci
    ```
@@ -74,7 +74,7 @@ Pre-commit lint-staged hooks aвтоматически запускаю тест
      npm run pack:firefox
      ```
 
-7. Установка в браузере:
+7. Установка в браузере при разработке (альтернатива dev режиму):
 
    - **Chrome**:
      1. Открыть `chrome://extensions/`

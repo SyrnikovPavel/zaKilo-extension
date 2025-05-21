@@ -1,5 +1,5 @@
-import { describe, it, expect, test } from "vitest";
-import { roundNumber, getUnitParsedWeight } from "./converters";
+import { describe, expect, it, test } from "vitest";
+import { getUnitParsedWeight, roundNumber } from "./converters";
 
 describe("converters", () => {
   describe("edge cases", () => {
@@ -43,12 +43,9 @@ describe("converters", () => {
         [1234.56, -2, 1200],
         [1750, -3, 2000],
         [-127.13, -1, -130],
-      ])(
-        "should round %f with %i decimal places to %f",
-        (value, decimalPlaces, expected) => {
-          expect(roundNumber(value, decimalPlaces)).toBe(expected);
-        }
-      );
+      ])("should round %f with %i decimal places to %f", (value, decimalPlaces, expected) => {
+        expect(roundNumber(value, decimalPlaces)).toBe(expected);
+      });
     });
 
     describe("special cases", () => {
@@ -88,16 +85,34 @@ describe("converters", () => {
 
         // Pieces
         [1, "шт", { unitLabel: "1 шт", multiplier: 1 }],
+        [2, "шт", { unitLabel: "1 шт", multiplier: 0.5 }],
+        [3, "шт", { unitLabel: "1 шт", multiplier: 0.3333333333333333 }],
         [4, "шт", { unitLabel: "1 шт", multiplier: 0.25 }],
         [10, "шт", { unitLabel: "1 шт", multiplier: 0.1 }],
         [1, "шт.", { unitLabel: "1 шт", multiplier: 1 }],
         [4, "шт.", { unitLabel: "1 шт", multiplier: 0.25 }],
-      ])(
-        "should convert %i %s to standard unit",
-        (value, unit, expected) => {
-          expect(getUnitParsedWeight(value, unit)).toEqual(expected);
-        }
-      );
+
+        // Weight
+        [950, "г", { unitLabel: "1 кг", multiplier: 1.0526315789473684 }],
+        [450, "г", { unitLabel: "1 кг", multiplier: 2.2222222222222223 }],
+        [75, "г", { unitLabel: "1 кг", multiplier: 13.333333333333334 }],
+        [3, "кг", { unitLabel: "1 кг", multiplier: 0.3333333333333333 }],
+        [2.7, "кг", { unitLabel: "1 кг", multiplier: 0.37037037037037035 }],
+
+        // Volume
+        [930, "мл", { unitLabel: "1 л", multiplier: 1.075268817204301 }],
+        [970, "мл", { unitLabel: "1 л", multiplier: 1.0309278350515463 }],
+        [800, "мл", { unitLabel: "1 л", multiplier: 1.25 }],
+        [906, "мл", { unitLabel: "1 л", multiplier: 1.1037527593818985 }],
+        [1.947, "л", { unitLabel: "1 л", multiplier: 0.5136106831022085 }],
+        [1.4, "л", { unitLabel: "1 л", multiplier: 0.7142857142857143 }],
+        [2, "л", { unitLabel: "1 л", multiplier: 0.5 }],
+
+        // Price per 100g
+        [100, "г", { unitLabel: "1 кг", multiplier: 10 }],
+      ])("should convert %i %s to standard unit", (value, unit, expected) => {
+        expect(getUnitParsedWeight(value, unit)).toEqual(expected);
+      });
     });
 
     describe("error handling", () => {

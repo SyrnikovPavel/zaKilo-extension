@@ -1,6 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
-import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
 import type { UnitLabel } from "@/types/IStrategy";
+import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
 
 export class LavkaStrategy extends ParserStrategy {
   constructor() {
@@ -8,19 +8,34 @@ export class LavkaStrategy extends ParserStrategy {
     this.strategyName = "Lavka";
     this.selectors = {
       card: "[class*=p19kkpiw]",
-      price: "[class*=phcb3a1] [class*=b15aiivf][style*='color'], [class*=t18stym3][class*=bw441np][class*=r88klks][style*='color']",
+      price:
+        "[class*=phcb3a1] [class*=b15aiivf][style*='color'], [class*=t18stym3][class*=bw441np][class*=r88klks][style*='color']",
       name: "[class*=m12g4kzj]",
       unitPrice: '[data-testid="unit-price"]',
     };
   }
 
   parsePrice(cardEl: HTMLElement): number {
-    const priceString = cardEl.querySelector(this.selectors.price)?.textContent;
-    this.log("parsed price text", priceString);
-    const cleaned = priceString?.replace(/\s|&thinsp;/g, "").replace("₽", "") ?? "";
-    const v = parseFloat(cleaned);
-    if (isNaN(v)) throw new Error("Invalid price: " + priceString);
-    return v;
+    const priceElement = cardEl.querySelector(this.selectors.price);
+    const priceString = priceElement?.textContent;
+
+    if (!priceString) {
+      throw new Error("Price string is empty or element not found");
+    }
+
+    const normalizedSpaceString = priceString.replace(/\s|&thinsp;/g, " ").trim();
+    const match = normalizedSpaceString.match(/^([\d.,]+)/);
+
+    if (match && match[1]) {
+      const potentialPrice = match[1].replace(",", ".");
+      this.log("parsed price text", potentialPrice);
+      const v = parseFloat(potentialPrice);
+      if (!isNaN(v)) {
+        return v;
+      }
+    }
+
+    throw new Error("Invalid price: " + priceString + " (normalized: " + normalizedSpaceString + ")");
   }
 
   parseQuantity(cardEl: HTMLElement): UnitLabel {
@@ -45,8 +60,18 @@ export class LavkaStrategy extends ParserStrategy {
 
     const formattedText = `${roundNumber(unitPrice, 0)}\u2009₽ за ${unitLabel}`;
 
+
+    const styles = {
+      color: "#000",
+      backgroundColor: "rgba(0, 198, 106, 0.1)",
+      padding: "2px 3px 2px 3px",
+      borderRadius: "0.25em",
+      fontWeight: "500",
+    };
+
     if (existingUnitPrice) {
       existingUnitPrice.textContent = formattedText;
+      Object.assign(existingUnitPrice.style, styles);
       return;
     }
 
@@ -55,13 +80,7 @@ export class LavkaStrategy extends ParserStrategy {
     span.setAttribute("data-testid", "unit-price");
     span.textContent = formattedText;
 
-    Object.assign(span.style, {
-      color: "#000",
-      backgroundColor: "rgba(0, 198, 106, 0.1)",
-      padding: "2px 6px 2px 0.5px",
-      borderRadius: "0.25em",
-      fontWeight: "500"
-    });
+    Object.assign(span.style, styles);
 
     wrapper.appendChild(span);
   }

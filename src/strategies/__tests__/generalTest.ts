@@ -33,7 +33,7 @@ export const generalCardTest = (strategy: IStrategy) => (testCard: any, index: n
 
       // Check that all expected styles are applied
       Object.entries(expectedStyles).forEach(([property, value]) => {
-        expect(styles[property as any]).toBe(value);
+        expect(styles[property as unknown as keyof CSSStyleDeclaration]).toBe(value);
       });
     });
   });

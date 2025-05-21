@@ -21,5 +21,5 @@ export interface IStrategy {
   renderUnitPrice(cardEl: HTMLElement, unitPrice: number, unitLabel: string): void;
   shouldProcess(cardEl: HTMLElement): boolean;
   process(cardEl: HTMLElement): void;
-  log(...args: any[]): void;
+  log(...args: unknown[]): void;
 }

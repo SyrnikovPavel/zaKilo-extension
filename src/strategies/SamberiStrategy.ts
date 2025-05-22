@@ -1,6 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
+import type { NoneUnitLabel, UnitLabel } from "@/types/IStrategy";
 import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
-import type { UnitLabel } from "@/types/IStrategy";
 
 export class SamberiStrategy extends ParserStrategy {
   constructor() {
@@ -23,16 +23,16 @@ export class SamberiStrategy extends ParserStrategy {
     return v;
   }
 
-  parseQuantity(cardEl: HTMLElement): UnitLabel {
+  parseQuantity(cardEl: HTMLElement): UnitLabel | NoneUnitLabel {
     const nameText = cardEl.querySelector(this.selectors.name)?.textContent?.trim() ?? "";
     this.log("parsed name text", nameText);
-    
+
     // Ищем все возможные форматы единиц измерения
     const patterns = [
       // Формат "число + единица без пробела" (например, "100г", "1л")
       /(\d+(?:[.,]\d+)?)([а-яёa-z]+)(?:\s|$)/i,
       // Формат "число + пробел + единица" (например, "200 мл")
-      /(\d+(?:[.,]\d+)?)\s+([а-яёa-z]+)(?:\s|$)/i
+      /(\d+(?:[.,]\d+)?)\s+([а-яёa-z]+)(?:\s|$)/i,
     ];
 
     // Ищем все совпадения во всех форматах
@@ -40,7 +40,7 @@ export class SamberiStrategy extends ParserStrategy {
     let lastIndex = -1;
 
     for (const pattern of patterns) {
-      const allMatches = nameText.matchAll(new RegExp(pattern, 'gi'));
+      const allMatches = nameText.matchAll(new RegExp(pattern, "gi"));
       for (const match of allMatches) {
         if (match.index! > lastIndex) {
           matches = match;
@@ -54,7 +54,7 @@ export class SamberiStrategy extends ParserStrategy {
     const num = parseFloat(matches[1].replace(",", "."));
     // Для процентов используем "г" как единицу измерения
     const unit = matches[2]?.toLowerCase() || "г";
-    
+
     // Если это процент, конвертируем в граммы (предполагаем, что это процент от 100г)
     if (matches[0].includes("%")) {
       return getUnitParsedWeight(num, "г");
@@ -67,7 +67,7 @@ export class SamberiStrategy extends ParserStrategy {
     const priceEl = cardEl.querySelector(this.selectors.price);
     if (!priceEl) throw new Error("Price element not found");
 
-    const wrapper = priceEl.closest('[class*=product-item-info-container]');
+    const wrapper = priceEl.closest("[class*=product-item-info-container]");
     if (!wrapper) throw new Error("Wrapper not found");
 
     // Ищем уже существующий unitPrice-бейдж
@@ -93,7 +93,41 @@ export class SamberiStrategy extends ParserStrategy {
       fontWeight: "500",
       display: "block",
       marginTop: "4px",
-      fontSize: "0.9em"
+      fontSize: "0.9em",
+    });
+
+    wrapper.appendChild(span);
+  }
+
+  renderNoneUnitPrice(cardEl: HTMLElement): void {
+    const priceEl = cardEl.querySelector(this.selectors.price);
+    if (!priceEl) throw new Error("Price element not found");
+
+    const wrapper = priceEl.closest("[class*=product-item-info-container]");
+    if (!wrapper) throw new Error("Wrapper not found");
+
+    // Ищем уже существующий unitPrice-бейдж
+    const existingUnitPrice = wrapper.querySelector('[data-testid="unit-price"]') as HTMLElement | null;
+
+    if (existingUnitPrice) {
+      existingUnitPrice.textContent = "Нет инф.";
+      return;
+    }
+
+    const span = document.createElement("span");
+    span.className = "product-item-price-current";
+    span.setAttribute("data-testid", "unit-price");
+    span.textContent = "Нет инф.";
+
+    Object.assign(span.style, {
+      color: "#000",
+      backgroundColor: "var(--accent-color,rgba(0, 69, 198, 0.13))",
+      padding: "2px 6px 2px 0.5px",
+      borderRadius: "0.25em",
+      fontWeight: "500",
+      display: "block",
+      marginTop: "4px",
+      fontSize: "0.9em",
     });
 
     wrapper.appendChild(span);

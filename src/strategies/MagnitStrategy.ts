@@ -1,6 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
+import type { NoneUnitLabel, UnitLabel } from "@/types/IStrategy";
 import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
-import type { UnitLabel } from "@/types/IStrategy";
 
 export class MagnitStrategy extends ParserStrategy {
   constructor() {
@@ -34,12 +34,12 @@ export class MagnitStrategy extends ParserStrategy {
     return v;
   }
 
-  parseQuantity(cardEl: HTMLElement): UnitLabel {
+  parseQuantity(cardEl: HTMLElement): UnitLabel | NoneUnitLabel {
     const nameText = cardEl.querySelector(this.selectors.name)?.textContent?.trim() ?? "";
     const s = nameText.trim().toLowerCase().replace(",", ".");
     const match = s.match(/([\d]+(?:\.\d+)?)\s*(г|гр|кг|мл|л|шт)\.?/i);
     if (!match) {
-      return { unitLabel: "1 шт", multiplier: 1 };
+      return { unitLabel: "1 шт", multiplier: 1 } as UnitLabel;
     }
     const value = parseFloat(match[1]);
     const unit = match[2];
@@ -61,6 +61,29 @@ export class MagnitStrategy extends ParserStrategy {
       display: "block",
       color: "rgb(0,0,0)",
       backgroundColor: "rgb(230,245,239)",
+      padding: "2px 6px 2px 0.5px",
+      borderRadius: "4px",
+      fontWeight: "600",
+      fontSize: "14px",
+      marginBottom: "4px",
+    });
+
+    priceContainer.prepend(span);
+  }
+
+  renderNoneUnitPrice(cardEl: HTMLElement): void {
+    const priceContainer = cardEl.querySelector('[class*="unit-catalog-product-preview-prices"]');
+    if (!priceContainer) throw new Error("Price container not found");
+
+    priceContainer.querySelectorAll(this.selectors.unitPrice).forEach((el: Element) => el.remove());
+
+    const span = document.createElement("span");
+    span.setAttribute("data-testid", "unit-price");
+    span.textContent = "Нет инф.";
+    Object.assign(span.style, {
+      display: "block",
+      color: "rgb(0,0,0)",
+      backgroundColor: "var(--accent-color,rgba(0, 69, 198, 0.13))",
       padding: "2px 6px 2px 0.5px",
       borderRadius: "4px",
       fontWeight: "600",

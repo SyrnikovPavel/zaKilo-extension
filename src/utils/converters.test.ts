@@ -1,14 +1,20 @@
-import { describe, it, expect, test } from "vitest";
-import { roundNumber, getUnitParsedWeight } from "./converters";
+import type { NoneUnitLabel } from "@/types/IStrategy";
+import { describe, expect, it, test } from "vitest";
+import { getUnitParsedWeight, roundNumber } from "./converters";
 
+
+
+
+
+const expectedNulled: NoneUnitLabel = { unitLabel: null, multiplier: null } as NoneUnitLabel;
 describe("converters", () => {
   describe("edge cases", () => {
     it("should handle zero value", () => {
-      expect(() => getUnitParsedWeight(0, "г")).toThrow("Значение не может быть нулевым");
+      expect(getUnitParsedWeight(0, "г")).toEqual(expectedNulled);
     });
 
     it("should handle negative value", () => {
-      expect(() => getUnitParsedWeight(-100, "г")).toThrow("Значение не может быть отрицательным");
+      expect(getUnitParsedWeight(-100, "г")).toEqual(expectedNulled);
     });
   });
   describe("roundNumber", () => {
@@ -43,12 +49,9 @@ describe("converters", () => {
         [1234.56, -2, 1200],
         [1750, -3, 2000],
         [-127.13, -1, -130],
-      ])(
-        "should round %f with %i decimal places to %f",
-        (value, decimalPlaces, expected) => {
-          expect(roundNumber(value, decimalPlaces)).toBe(expected);
-        }
-      );
+      ])("should round %f with %i decimal places to %f", (value, decimalPlaces, expected) => {
+        expect(roundNumber(value, decimalPlaces)).toBe(expected);
+      });
     });
 
     describe("special cases", () => {
@@ -92,33 +95,32 @@ describe("converters", () => {
         [10, "шт", { unitLabel: "1 шт", multiplier: 0.1 }],
         [1, "шт.", { unitLabel: "1 шт", multiplier: 1 }],
         [4, "шт.", { unitLabel: "1 шт", multiplier: 0.25 }],
-      ])(
-        "should convert %i %s to standard unit",
-        (value, unit, expected) => {
-          expect(getUnitParsedWeight(value, unit)).toEqual(expected);
-        }
-      );
+      ])("should convert %i %s to standard unit", (value, unit, expected) => {
+        expect(getUnitParsedWeight(value, unit)).toEqual(expected);
+      });
     });
 
+    const expectedNulled: NoneUnitLabel = { unitLabel: null, multiplier: null } as NoneUnitLabel;
+
     describe("error handling", () => {
-      it("should throw for zero value", () => {
-        expect(() => getUnitParsedWeight(0, "г")).toThrow("Значение не может быть нулевым");
+      it("should return NoneUnitLabel for zero value", () => {
+        expect(getUnitParsedWeight(0, "г")).toEqual(expectedNulled);
       });
 
-      it("should throw for negative value", () => {
-        expect(() => getUnitParsedWeight(-100, "г")).toThrow("Значение не может быть отрицательным");
+      it("should return NoneUnitLabel for negative value", () => {
+        expect(getUnitParsedWeight(-100, "г")).toEqual(expectedNulled);
       });
 
-      it("should throw for unknown unit", () => {
-        expect(() => getUnitParsedWeight(5, "unknown")).toThrow("Неизвестная единица: unknown");
+      it("should return NoneUnitLabel for unknown unit", () => {
+        expect(getUnitParsedWeight(5, "unknown")).toEqual(expectedNulled);
       });
 
-      it("should throw for empty unit", () => {
-        expect(() => getUnitParsedWeight(5, "")).toThrow("Неизвестная единица: ");
+      it("should return NoneUnitLabel for empty unit", () => {
+        expect(getUnitParsedWeight(5, "")).toEqual(expectedNulled);
       });
 
-      it("should throw for space unit", () => {
-        expect(() => getUnitParsedWeight(5, " ")).toThrow("Неизвестная единица:  ");
+      it("should return NoneUnitLabel for space unit", () => {
+        expect(getUnitParsedWeight(5, " ")).toEqual(expectedNulled);
       });
     });
   });

@@ -1,10 +1,31 @@
-export type UnitLabel = {
-  unitLabel: string;
-  multiplier: number;
+import type { Tagged } from "type-fest";
+export type UnitLabel = Tagged<
+  {
+    unitLabel: string;
+    multiplier: number;
+  },
+  "UnitLabel"
+>;
+
+export type NoneUnitLabel = Tagged<
+  {
+    unitLabel: null;
+    multiplier: null;
+  },
+  "NoneUnitLabel"
+>;
+
+export const isUnitLabel = (value: UnitLabel | NoneUnitLabel): value is UnitLabel => {
+  return (value as UnitLabel).unitLabel !== null;
 };
 
+export const isNoneUnitLabel = (value: UnitLabel | NoneUnitLabel): value is NoneUnitLabel => {
+  return (value as NoneUnitLabel).unitLabel === null;
+};
+
+
 export interface IStrategy {
-  strategyName: string;
+  strategyName: string /*  */;
   selectors: {
     card: string;
     price: string;
@@ -17,8 +38,9 @@ export interface IStrategy {
 
   getCardSelector(): string;
   parsePrice(cardEl: HTMLElement): number;
-  parseQuantity(cardEl: HTMLElement): UnitLabel;
+  parseQuantity(cardEl: HTMLElement): UnitLabel | NoneUnitLabel;
   renderUnitPrice(cardEl: HTMLElement, unitPrice: number, unitLabel: string): void;
+  renderNoneUnitPrice(cardEl: HTMLElement): void;
   shouldProcess(cardEl: HTMLElement): boolean;
   process(cardEl: HTMLElement): void;
   log(...args: any[]): void;

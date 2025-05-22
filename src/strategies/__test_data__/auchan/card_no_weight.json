@@ -1,0 +1,18 @@
+{
+  "html": "<div class=\"digi-product\"><div class=\"digi-product__image\"><a href=\"/elektronika-p1/zaryadnye-ustroystva-i-provoda-p23\"><img src=\"https://example.com/image.jpg\" alt=\"Зарядное устройство\" /></a></div><div class=\"digi-product__info\"><div class=\"digi-product__label\">Зарядное устройство универсальное</div><div class=\"digi-product__price\">1290 ₽</div></div></div>",
+  "expectedParsedPrice": 1290,
+
+  "expectedNoneUnitPrice": {
+    "text": "Нет инф.",
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.5em",
+      "color": "rgb(0, 0, 0)",
+      "background": "var(--accent-color,rgba(0, 69, 198, 0.13)) var(--accent-color,rgba(0, 69, 198, 0.13))",
+      "padding": "2px 6px",
+      "borderRadius": "4px",
+      "fontWeight": "900",
+      "fontSize": "calc(0.95vw)"
+    }
+  }
+}

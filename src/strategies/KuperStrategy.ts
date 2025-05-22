@@ -1,6 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
+import type { NoneUnitLabel, UnitLabel } from "@/types/IStrategy";
 import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
-import type { UnitLabel } from "@/types/IStrategy";
 
 export class KuperStrategy extends ParserStrategy {
   constructor() {
@@ -25,7 +25,7 @@ export class KuperStrategy extends ParserStrategy {
     return fallbackV;
   }
 
-  parseQuantity(cardEl: HTMLElement): UnitLabel {
+  parseQuantity(cardEl: HTMLElement): UnitLabel | NoneUnitLabel {
     const volumeText = this.selectors?.volume ? cardEl.querySelector(this.selectors.volume)?.textContent || "" : "";
     const nameText = cardEl.querySelector(this.selectors.name)?.getAttribute("title") || "";
     const volumeString = nameText || volumeText;
@@ -69,6 +69,34 @@ export class KuperStrategy extends ParserStrategy {
       marginLeft: "0.5em",
       color: "#000",
       background: "var(--accent-color, #00C66A20)",
+      padding: "2px 6px",
+      borderRadius: "4px",
+      fontWeight: "900",
+      fontSize: fz,
+    });
+    wrapper.appendChild(span);
+  }
+
+  renderNoneUnitPrice(cardEl: Element): void {
+    const wrapper = cardEl.querySelector(this.selectors.price)?.closest("div");
+    if (!wrapper) throw new Error("Wrapper not found");
+
+    const fz = "calc(0.95vw)";
+
+    wrapper.style.fontSize = fz;
+    // @ts-expect-error
+    wrapper.parentElement.style.fontSize = fz;
+
+    wrapper.querySelectorAll(this.selectors.unitPrice).forEach((el: Element) => el.remove());
+
+    const span = document.createElement("span");
+    span.setAttribute("data-testid", "unit-price");
+    span.textContent = "Нет инф.";
+    Object.assign(span.style, {
+      display: "inline-block",
+      marginLeft: "0.5em",
+      color: "#000",
+      background: "var(--accent-color,rgba(0, 69, 198, 0.13))",
       padding: "2px 6px",
       borderRadius: "4px",
       fontWeight: "900",

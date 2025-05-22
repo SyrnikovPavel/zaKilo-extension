@@ -1,4 +1,4 @@
-import type { IStrategy, UnitLabel } from "@/types/IStrategy";
+import { isNoneUnitLabel, isUnitLabel, type IStrategy, type NoneUnitLabel, type UnitLabel } from "@/types/IStrategy";
 
 const isDev = import.meta.env.DEV;
 
@@ -40,13 +40,21 @@ export abstract class ParserStrategy implements IStrategy {
     const price = this.parsePrice(cardEl);
     this.log("parsed price", price);
 
-    const { unitLabel, multiplier } = this.parseQuantity(cardEl);
-    this.log("parsed quantity", { unitLabel, multiplier });
+    const parsedQuantity: UnitLabel | NoneUnitLabel = this.parseQuantity(cardEl);
 
-    const unitPrice = price * multiplier;
-    this.log("calculated unit price", unitPrice);
+    if (isNoneUnitLabel(parsedQuantity) ) {
+      this.log("none information about quantity");
+      this.renderNoneUnitPrice(cardEl);
+    }
 
-    this.renderUnitPrice(cardEl, unitPrice, unitLabel);
+    if (isUnitLabel(parsedQuantity)) {
+      const { unitLabel, multiplier } = parsedQuantity;
+      this.log("parsed quantity", { unitLabel, multiplier });
+
+      const unitPrice = price * multiplier;
+      this.log("calculated unit price", unitPrice);
+      this.renderUnitPrice(cardEl, unitPrice, unitLabel);
+    }
   }
 
   log(...args: unknown[]): void {
@@ -56,6 +64,7 @@ export abstract class ParserStrategy implements IStrategy {
   }
 
   abstract parsePrice(cardEl: HTMLElement): number;
-  abstract parseQuantity(cardEl: HTMLElement): UnitLabel;
+  abstract parseQuantity(cardEl: HTMLElement): UnitLabel | NoneUnitLabel;
   abstract renderUnitPrice(cardEl: HTMLElement, unitPrice: number, unitLabel: string): void;
+  abstract renderNoneUnitPrice(cardEl: HTMLElement): void;
 }

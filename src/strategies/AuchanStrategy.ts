@@ -1,6 +1,6 @@
-import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
 import { ParserStrategy } from "@/core/ParserStrategy";
-import type { UnitLabel } from "@/types/IStrategy";
+import type { NoneUnitLabel, UnitLabel } from "@/types/IStrategy";
+import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
 
 export class AuchanStrategy extends ParserStrategy {
   constructor() {
@@ -24,7 +24,7 @@ export class AuchanStrategy extends ParserStrategy {
     return v;
   }
 
-  parseQuantity(cardEl: HTMLElement): UnitLabel {
+  parseQuantity(cardEl: HTMLElement): UnitLabel | NoneUnitLabel {
     let nameText: string;
 
     nameText = cardEl.querySelector(this.selectors.name)?.textContent?.trim() ?? "";
@@ -36,7 +36,6 @@ export class AuchanStrategy extends ParserStrategy {
       }
     }
 
-
     if (this.selectors?.volume) {
       const volumeText = cardEl.querySelector(this.selectors.volume)?.textContent?.trim() ?? "";
       if (volumeText) {
@@ -46,10 +45,38 @@ export class AuchanStrategy extends ParserStrategy {
 
     const regex = /([\d.,]+)\s*(г(?!од)|гр|кг|мл|л|шт)/i;
     const match = nameText.match(regex);
-    if (!match) return { unitLabel: "1 шт", multiplier: 1 };
+    if (!match) return { unitLabel: null, multiplier: null } as NoneUnitLabel;
     const value = parseFloat(match[1].replace(",", "."));
     const unit = match[2].toLowerCase();
-    return getUnitParsedWeight(value, unit);
+    return getUnitParsedWeight(value, unit) as UnitLabel | NoneUnitLabel;
+  }
+
+  renderNoneUnitPrice(cardEl: HTMLElement): void {
+    const wrapper = cardEl.querySelector(this.selectors.price)?.closest("div");
+    if (!wrapper) throw new Error("Wrapper not found");
+
+    const fz = "calc(0.95vw)";
+
+    wrapper.style.fontSize = fz;
+    // @ts-expect-error
+    wrapper.parentElement.style.fontSize = fz;
+
+    wrapper.querySelectorAll(this.selectors.unitPrice).forEach((el) => el.remove());
+
+    const span = document.createElement("span");
+    span.setAttribute("data-testid", "unit-price");
+    span.textContent = `Нет инф.`;
+    Object.assign(span.style, {
+      display: "inline-block",
+      marginLeft: "0.5em",
+      color: "#000",
+      background: "var(--accent-color,rgba(0, 69, 198, 0.13))",
+      padding: "2px 6px",
+      borderRadius: "4px",
+      fontWeight: "900",
+      fontSize: fz,
+    });
+    wrapper.appendChild(span);
   }
 
   renderUnitPrice(cardEl: HTMLElement, unitPrice: number, unitLabel: string): void {

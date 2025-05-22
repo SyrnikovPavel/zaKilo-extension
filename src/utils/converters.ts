@@ -1,4 +1,4 @@
-import type { UnitLabel } from "@/types/IStrategy";
+import type { NoneUnitLabel, UnitLabel } from "@/types/IStrategy";
 
 /**
  * Rounds a number to the specified number of decimal places
@@ -13,27 +13,27 @@ export function roundNumber(value: number, decimalPlaces: number = 2): number {
   return value < 0 ? -rounded : rounded;
 }
 
-export function getUnitParsedWeight(value: number, unit: string): UnitLabel {
+export function getUnitParsedWeight(value: number, unit: string): UnitLabel | NoneUnitLabel {
   if (value === 0) {
-    throw new Error("Значение не может быть нулевым");
+    return { unitLabel: null, multiplier: null } as NoneUnitLabel;
   }
   if (value < 0) {
-    throw new Error("Значение не может быть отрицательным");
+    return { unitLabel: null, multiplier: null } as NoneUnitLabel;
   }
   switch (unit) {
     case "г":
     case "гр":
-      return { unitLabel: "1 кг", multiplier: 1000 / value };
+      return { unitLabel: "1 кг", multiplier: 1000 / value } as UnitLabel;
     case "кг":
-      return { unitLabel: "1 кг", multiplier: 1 / value };
+      return { unitLabel: "1 кг", multiplier: 1 / value } as UnitLabel;
     case "мл":
-      return { unitLabel: "1 л", multiplier: 1000 / value };
+      return { unitLabel: "1 л", multiplier: 1000 / value } as UnitLabel;
     case "л":
-      return { unitLabel: "1 л", multiplier: 1 / value };
+      return { unitLabel: "1 л", multiplier: 1 / value } as UnitLabel;
     case "шт":
     case "шт.":
-      return { unitLabel: "1 шт", multiplier: 1 / value };
+      return { unitLabel: "1 шт", multiplier: 1 / value } as UnitLabel;
     default:
-      throw new Error("Неизвестная единица: " + unit);
+      return { unitLabel: null, multiplier: null } as NoneUnitLabel;
   }
 }

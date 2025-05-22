@@ -1,0 +1,22 @@
+{
+  "html": "<div class=\"product-card\"><div class=\"product-card-wrapper\"><div class=\"product-card-header\"><div class=\"product-card-header__wrapper\"><div class=\"product-card-header__promo-tags\"></div></div></div><div class=\"product-card-photo\"><div class=\"product-card-photo__content\"><div class=\"product-card-photo__container\"><span class=\"product-card-photo__wrapper\"><img automation-id=\"product-card-photo\" src=\"https://lenta.gcdn.co/store/e66bb6dd-9e2b-497c-a4db-1f77918ed911/c9cd5cf5-e1a4-4fd2-8a9d-51cb7e36afbb.jpg\" class=\"product-card-photo__image\"></span></div></div></div><div class=\"product-info\"><div class=\"product-name\"><a href=\"/catalog/chay-kofe-kakao/kofe/kofe-v-kapsulah/kofe-v-kapsulah-coffesso-classico-italiano-medium-roast-arabika-dlya-nespresso-55g/\" class=\"product-name__link\"><span automation-id=\"catProductName\" title=\"Кофе в капсулах Coffesso Classico Italiano Medium Roast арабика для Nespresso\" class=\"product-name__text\">Кофе в капсулах Coffesso Classico Italiano Medium Roast арабика для Nespresso</span></a></div><div class=\"product-position-price\"></div><div class=\"prices-container\"><div class=\"price-and-buttons\"><div class=\"main-price\"><div class=\"main-price__inner\"><div class=\"main-price__wrapper\"><div class=\"main-price__container\"><div class=\"price-label \"><div class=\"product-price\">389,99&nbsp;₽</div></div></div></div></div></div><div class=\"ng-star-inserted\"><lu-counter-first-add class=\"price-and-buttons__counter\"></lu-counter-first-add></div></div></div></div></div></div>",
+  "expectedParsedPrice": 389.99,
+  "expectedParsedQuantity": {
+    "unitLabel": null,
+    "multiplier": null
+  },
+  "expectedNoneUnitPrice": {
+    "text": "Нет инф.",
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.4em",
+      "marginRight": "0.4em",
+      "color": "rgb(0, 0, 0)",
+      "padding": "2px",
+      "borderRadius": "4px",
+      "backgroundColor": "var(--accent-color,rgba(0, 69, 198, 0.13))",
+      "fontWeight": "900",
+      "fontSize": "calc(0.7vw)"
+    }
+  }
+}

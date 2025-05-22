@@ -15,7 +15,7 @@ class MockStrategy implements IStrategy {
   // Spy methods to track calls
   getCardSelector = vi.fn(() => this.selectors.card);
   parsePrice = vi.fn(() => 100);
-  parseQuantity = vi.fn((): UnitLabel => ({ unitLabel: "1 кг", multiplier: 1 }));
+  parseQuantity = vi.fn((): UnitLabel => ({ unitLabel: "1 кг", multiplier: 1 } as UnitLabel));
   renderUnitPrice = vi.fn();
   shouldProcess = vi.fn(() => true);
   process = vi.fn();

@@ -1,6 +1,6 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
+import type { NoneUnitLabel, UnitLabel } from "@/types/IStrategy";
 import { getUnitParsedWeight, roundNumber } from "@/utils/converters";
-import type { UnitLabel } from "@/types/IStrategy";
 
 export class SamokatStrategy extends ParserStrategy {
   constructor() {
@@ -24,7 +24,7 @@ export class SamokatStrategy extends ParserStrategy {
     return v;
   }
 
-  parseQuantity(cardEl: HTMLElement): UnitLabel {
+  parseQuantity(cardEl: HTMLElement): UnitLabel | NoneUnitLabel {
     let nameText: string;
     if (this.selectors?.volume) {
       nameText = cardEl.querySelector(this.selectors.volume)?.textContent?.trim() ?? "";
@@ -43,7 +43,7 @@ export class SamokatStrategy extends ParserStrategy {
       total = count * per;
     } else {
       const m = s.match(/([\d.]+)\s*([^\s\d]+)/);
-      if (!m) return { unitLabel: "1 шт", multiplier: 1 };
+      if (!m) return { unitLabel: "1 шт", multiplier: 1 } as UnitLabel;
       total = parseFloat(m[1]);
       unit = m[2];
     }
@@ -69,6 +69,28 @@ export class SamokatStrategy extends ParserStrategy {
       display: "inline-block",
       color: "#000",
       backgroundColor: "var(--accent-color, #00C66A20)",
+      padding: "2px 6px",
+      borderRadius: "4px",
+      fontWeight: "600",
+      fontSize: "15px",
+    });
+    details.appendChild(span);
+  }
+
+  renderNoneUnitPrice(cardEl: HTMLElement): void {
+    const details = cardEl.querySelector(this.selectors?.renderRoot || this.selectors.price);
+    if (!details) throw new Error("Не найдены необходимые элементы");
+
+    // Удаляем старые
+    details.querySelectorAll(this.selectors.unitPrice).forEach((e) => e.remove());
+
+    const span = document.createElement("span");
+    span.setAttribute("data-testid", "unit-price");
+    span.textContent = "Нет инф.";
+    Object.assign(span.style, {
+      display: "inline-block",
+      color: "#000",
+      backgroundColor: "var(--accent-color,rgba(0, 69, 198, 0.13))",
       padding: "2px 6px",
       borderRadius: "4px",
       fontWeight: "600",

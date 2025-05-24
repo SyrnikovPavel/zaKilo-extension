@@ -1,8 +1,41 @@
 # заКило Extension
 
+[![PR Checks](https://github.com/SyrnikovPavel/zaKilo-extension/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/SyrnikovPavel/zaKilo-extension/actions/workflows/pr-checks.yml)
+[![Build and Release](https://github.com/SyrnikovPavel/zaKilo-extension/actions/workflows/build-and-release.yml/badge.svg)](https://github.com/SyrnikovPavel/zaKilo-extension/actions/workflows/build-and-release.yml)
+
 Расширение для сравнения цены за единицу товара в каталоге популярных сервисов доставки.
 
 > **Примечание:** Проект переведен с JavaScript на TypeScript для улучшения типобезопасности и поддержки кода.
+
+## 🚀 CI/CD и Релизы
+
+Проект настроен с автоматическими процессами CI/CD через GitHub Actions:
+
+### 📋 Проверки Pull Request'ов
+
+- **Автоматически запускается:** При создании/обновлении PR в любую ветку
+- **Проверки:** TypeScript типы, ESLint, тесты (Vitest)
+- **Поддерживаемые Node.js:** 18.x, 20.x
+- **Тестовая сборка:** Для Chrome и Firefox
+- **Исключения:** Игнорируются изменения только в `.md` файлах, `docs/` и `screenshots/`
+
+### 🎯 Автоматические релизы
+
+- **Триггер:** Push в main ветку
+- **Процесс:**
+  - Полная проверка качества кода
+  - Сборка для Chrome и Firefox
+  - Создание GitHub релиза с версией из `package.json`
+  - Автоматическое прикрепление `.zip` файлов
+
+### 📦 Скачивание релизов
+
+Готовые расширения доступны в разделе [Releases](https://github.com/SyrnikovPavel/zaKilo-extension/releases):
+
+- `zaKilo-chrome-{version}.zip` — для Chrome
+- `zaKilo-firefox-{version}.zip` — для Firefox
+
+---
 
 ### Установка и запуск
 

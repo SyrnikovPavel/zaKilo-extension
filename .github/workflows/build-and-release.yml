@@ -1,0 +1,124 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "screenshots/**"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  build:
+    name: Build Extensions
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    outputs:
+      version: ${{ steps.package_version.outputs.version }}
+      release_tag: ${{ steps.package_version.outputs.tag }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.x"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get package version
+        id: package_version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=v$VERSION" >> $GITHUB_OUTPUT
+          echo "Package version: $VERSION"
+
+      - name: Run quality checks
+        run: |
+          npm run type-check
+          npm run lint
+          npm run test:ci
+
+      - name: Build Chrome extension
+        run: |
+          npm run build:chrome
+          npm run pack:chrome
+
+      - name: Build Firefox extension
+        run: |
+          npm run build:firefox
+          npm run pack:firefox
+
+      - name: Upload Chrome artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chrome-extension
+          path: ext-dist/zaKilo-chrome-*.zip
+
+      - name: Upload Firefox artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firefox-extension
+          path: ext-dist/zaKilo-firefox-*.zip
+
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: build
+    if: success()
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Chrome artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: chrome-extension
+          path: ./release-artifacts
+
+      - name: Download Firefox artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: firefox-extension
+          path: ./release-artifacts
+
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          cat << EOF > release_notes.md
+          ## 🚀 zaKilo Extension v${{ needs.build.outputs.version }}
+
+          ### 📦 Установка:
+          - **Chrome**: Скачайте \`zaKilo-chrome-${{ needs.build.outputs.version }}.zip\`
+          - **Firefox**: Скачайте \`zaKilo-firefox-${{ needs.build.outputs.version }}.zip\`
+
+          ### 🛠️ Сборка:
+          - Node.js версия: 18.x
+          - Собрано: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          - Commit: ${{ github.sha }}
+          EOF
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.build.outputs.release_tag }}
+          name: zaKilo Extension ${{ needs.build.outputs.version }}
+          body_path: release_notes.md
+          draft: false
+          prerelease: false
+          files: |
+            ./release-artifacts/zaKilo-chrome-${{ needs.build.outputs.version }}.zip
+            ./release-artifacts/zaKilo-firefox-${{ needs.build.outputs.version }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

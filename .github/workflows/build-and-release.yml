@@ -17,14 +17,14 @@ jobs:
     name: Build Extensions
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
     outputs:
       version: ${{ steps.package_version.outputs.version }}
       release_tag: ${{ steps.package_version.outputs.tag }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -35,13 +35,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Get package version
+      - name: Bump version
         id: package_version
         run: |
-          VERSION=$(node -p "require('./package.json').version")
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "tag=v$VERSION" >> $GITHUB_OUTPUT
-          echo "Package version: $VERSION"
+          # Автоматический подъем patch версии (1.0.3 -> 1.0.4)
+          NEW_VERSION=$(npm version patch --no-git-tag-version)
+          NEW_VERSION=${NEW_VERSION#v} # убираем префикс 'v'
+          
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "tag=v$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
+
+      - name: Commit version bump
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add package.json package-lock.json
+          git commit -m "🔖 Bump version to ${{ steps.package_version.outputs.version }}"
+          git push
 
       - name: Run quality checks
         run: |
@@ -59,27 +70,37 @@ jobs:
           npm run build:firefox
           npm run pack:firefox
 
+      # Отладочный шаг для просмотра содержимого директории
+      - name: List ext-dist contents
+        run: ls -la ext-dist
+
       - name: Upload Chrome artifact
         uses: actions/upload-artifact@v4
         with:
           name: chrome-extension
-          path: ext-dist/zaKilo-chrome-*.zip
+          # Используем точное имя файла из логов
+          path: ext-dist/zakilo-chrome-*.zip
+          if-no-files-found: error
 
       - name: Upload Firefox artifact
         uses: actions/upload-artifact@v4
         with:
           name: firefox-extension
-          path: ext-dist/zaKilo-firefox-*.zip
+          # Используем точное имя файла из логов
+          path: ext-dist/zakilo-firefox-*.zip
+          if-no-files-found: error
 
   release:
     name: Create Release
     runs-on: ubuntu-latest
     needs: build
     if: success()
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Prepare release artifacts directory
+        run: mkdir -p ./release-artifacts
 
       - name: Download Chrome artifact
         uses: actions/download-artifact@v4
@@ -93,6 +114,9 @@ jobs:
           name: firefox-extension
           path: ./release-artifacts
 
+      - name: List release-artifacts contents
+        run: ls -la ./release-artifacts
+
       - name: Generate release notes
         id: release_notes
         run: |
@@ -100,8 +124,8 @@ jobs:
           ## 🚀 zaKilo Extension v${{ needs.build.outputs.version }}
 
           ### 📦 Установка:
-          - **Chrome**: Скачайте \`zaKilo-chrome-${{ needs.build.outputs.version }}.zip\`
-          - **Firefox**: Скачайте \`zaKilo-firefox-${{ needs.build.outputs.version }}.zip\`
+          - **Chrome**: Скачайте \`zakilo-chrome-${{ needs.build.outputs.version }}.zip\`
+          - **Firefox**: Скачайте \`zakilo-firefox-${{ needs.build.outputs.version }}.zip\`
 
           ### 🛠️ Сборка:
           - Node.js версия: 18.x
@@ -118,7 +142,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            ./release-artifacts/zaKilo-chrome-${{ needs.build.outputs.version }}.zip
-            ./release-artifacts/zaKilo-firefox-${{ needs.build.outputs.version }}.zip
+            ./release-artifacts/zakilo-chrome-${{ needs.build.outputs.version }}.zip
+            ./release-artifacts/zakilo-firefox-${{ needs.build.outputs.version }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

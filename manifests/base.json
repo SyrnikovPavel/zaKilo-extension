@@ -16,7 +16,8 @@
     "*://*.perekrestok.ru/*",
     "*://shop.samberi.com/*",
     "*://5ka.ru/*",
-    "*://samokat.ru/*"
+    "*://samokat.ru/*",
+    "*://online.metro-cc.ru/*"
   ],
   "action": {
     "default_icon": {

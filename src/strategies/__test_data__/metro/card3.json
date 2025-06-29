@@ -1,0 +1,13 @@
+{
+  "html": "<div class=\"product-card__content\"><div class=\"product-card-photo\"><a href=\"/products/steyk-ribay-myasoet-400g\" class=\"product-card-photo__link\"><img src=\"https://cdn.metro-cc.ru/ru/ru_pim_987654321001_01.png\" alt=\"Стейк рибай Myasoet Meat Company Exclusive Collection охлажденный, 400г\" class=\"product-card-photo__image\"></a><div class=\"product-card-photo__discount\"><div class=\"product-discount\">-5%</div></div></div><div class=\"catalog-1-level-product-card__prices-rating\"><div class=\"product-unit-prices\"><div class=\"product-unit-prices__actual-wrapper\"><span class=\"product-price product-unit-prices__actual\"><span class=\"product-price__sum\"><span class=\"product-price__sum-rubles\">2545</span></span><span class=\"product-price__unit\">/шт</span></span></div><div class=\"product-unit-prices__old-wrapper\"><span class=\"product-price product-unit-prices__old\"><span class=\"product-price__sum\"><span class=\"product-price__sum-rubles\">2679.01</span></span><span class=\"product-price__unit\">/шт</span></span></div></div></div><div class=\"catalog-1-level-product-card__middle\"><a href=\"/products/steyk-ribay-myasoet-400g\" class=\"product-card-name\"><span class=\"product-card-name__text\">Стейк рибай Myasoet Meat Company Exclusive Collection охлажденный, 400г</span></a></div></div>",
+  "expectedParsedPrice": 2545,
+  "expectedParsedQuantity": {
+    "multiplier": 2.5,
+    "unitLabel": "1 кг"
+  },
+  "expectedUnitPrice": {
+    "price": "6363",
+    "label": "1 кг",
+    "styles": {}
+  }
+}

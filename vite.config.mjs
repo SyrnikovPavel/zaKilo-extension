@@ -1,6 +1,6 @@
+import { merge } from "lodash-es";
 import { defineConfig } from "vite";
 import webExtension from "vite-plugin-web-extension";
-import { merge } from "lodash-es";
 
 export default defineConfig(({ mode }) => {
   const target = mode;
@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
           "src/content/pyaterochka.ts",
           "src/content/samberi.ts",
           "src/content/samokat.ts",
+          "src/content/metro.ts",
         ],
         browser: target,
       }),

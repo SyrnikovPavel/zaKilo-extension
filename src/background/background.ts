@@ -54,6 +54,10 @@ const siteMap: SiteConfig[] = [
     match: ["*://samokat.ru/*"],
     script: "src/content/samokat.js",
   },
+  {
+    match: ["*://online.metro-cc.ru/*"],
+    script: "src/content/metro.js",
+  },
 ];
 
 function matches(url: string, patterns: string[]): boolean {

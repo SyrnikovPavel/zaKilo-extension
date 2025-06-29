@@ -34,6 +34,7 @@ export interface IStrategy {
     unitPrice: string;
     volume?: string;
     renderRoot?: string;
+    priceUnit?: string;
   };
 
   getCardSelector(): string;

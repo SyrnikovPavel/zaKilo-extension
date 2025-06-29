@@ -1,0 +1,13 @@
+{
+  "html": "<div class=\"product-card__content\"><div class=\"product-card-photo\"><a href=\"/products/myakot-govyadiny-myaso-est-halyal-ohlazhdennaya-600g\" class=\"product-card-photo__link\"><img src=\"https://cdn.metro-cc.ru/ru/ru_pim_123456789001_01.png\" alt=\"Мякоть говядины Мясо есть! Халяль охлажденная, 600г\" class=\"product-card-photo__image\"></a><div class=\"product-card-photo__discount\"><div class=\"product-discount\">-8%</div></div></div><div class=\"catalog-1-level-product-card__prices-rating\"><div class=\"product-unit-prices\"><div class=\"product-unit-prices__actual-wrapper\"><span class=\"product-price product-unit-prices__actual\"><span class=\"product-price__sum\"><span class=\"product-price__sum-rubles\">769</span></span><span class=\"product-price__unit\">/шт</span></span></div><div class=\"product-unit-prices__old-wrapper\"><span class=\"product-price product-unit-prices__old\"><span class=\"product-price__sum\"><span class=\"product-price__sum-rubles\">839</span></span><span class=\"product-price__unit\">/шт</span></span></div></div></div><div class=\"catalog-1-level-product-card__middle\"><a href=\"/products/myakot-govyadiny-myaso-est-halyal-ohlazhdennaya-600g\" class=\"product-card-name\"><span class=\"product-card-name__text\">Мякоть говядины Мясо есть! Халяль охлажденная, 600г</span></a></div></div>",
+  "expectedParsedPrice": 769,
+  "expectedParsedQuantity": {
+    "multiplier": 1.6666666666666667,
+    "unitLabel": "1 кг"
+  },
+  "expectedUnitPrice": {
+    "price": "1282",
+    "label": "1 кг",
+    "styles": {}
+  }
+}

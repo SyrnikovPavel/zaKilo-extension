@@ -1,6 +1,6 @@
 {
   "name": "zakilo-extension",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "description": "Расширение для сравнения цен на продуктов в онлайн-магазинах",
   "repository": {
     "type": "git",
@@ -71,5 +71,8 @@
   },
   "dependencies": {
     "convert-units": "2.3.4"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-win32-x64-msvc": "4.44.0"
   }
 }

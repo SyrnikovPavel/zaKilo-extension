@@ -1,0 +1,20 @@
+{
+  "name": "Окорок ягненка Мясо есть! Халяль охлажденный, ~1кг",
+  "price": 2499,
+  "priceUnit": "/кг",
+  "oldPrice": null,
+  "discount": null,
+  "url": "/products/okorok-yagnenka-myaso-est-halyal-ohlazhdennyj-1kg",
+  "image": "https://cdn.metro-cc.ru/ru/ru_pim_561457001001_01.png",
+  "html": "<div class=\"product-card__content\"><div class=\"product-card-photo\"><a href=\"/products/okorok-yagnenka-myaso-est-halyal-ohlazhdennyj-1kg\" class=\"product-card-photo__link\"><img src=\"https://cdn.metro-cc.ru/ru/ru_pim_561457001001_01.png\" alt=\"Окорок ягненка Мясо есть! Халяль охлажденный, ~1кг\" class=\"product-card-photo__image\"></a></div><div class=\"catalog-1-level-product-card__prices-rating\"><div class=\"product-unit-prices\"><div class=\"product-unit-prices__actual-wrapper\"><span class=\"product-price product-unit-prices__actual\"><span class=\"product-price__sum\"><span class=\"product-price__sum-rubles\">2499</span></span><span class=\"product-price__unit\">/кг</span></span></div></div></div><div class=\"catalog-1-level-product-card__middle\"><a href=\"/products/okorok-yagnenka-myaso-est-halyal-ohlazhdennyj-1kg\" class=\"product-card-name\"><span class=\"product-card-name__text\">Окорок ягненка Мясо есть! Халяль охлажденный, ~1кг</span></a></div></div>",
+  "expectedParsedPrice": 2499,
+  "expectedParsedQuantity": {
+    "multiplier": 1,
+    "unitLabel": "1 кг"
+  },
+  "expectedUnitPrice": {
+    "price": "2499",
+    "label": "1 кг",
+    "styles": {}
+  }
+}

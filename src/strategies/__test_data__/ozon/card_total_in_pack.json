@@ -1,0 +1,22 @@
+{
+  "html": "<div class=\"tile-root\"><div class=\"price-wrap\"><span class=\"tsHeadline500Medium\">508 ₽</span></div><div class=\"name-wrap\"><span class=\"tsBody500Medium\">Гречневая экстра Алтайская мягкая упаковка 4,8 кг (6 шт. по 800 г.)</span></div></div>",
+  "expectedParsedPrice": 508,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 кг",
+    "multiplier": 0.20833
+  },
+  "expectedUnitPrice": {
+    "price": 106,
+    "label": "1 кг",
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.5em",
+      "color": "rgb(0, 0, 0)",
+      "background": "var(--accent-color, #00C66A20) var(--accent-color, #00C66A20)",
+      "padding": "2px 6px",
+      "borderRadius": "4px",
+      "fontWeight": "900",
+      "fontSize": "calc(0.95vw)"
+    }
+  }
+}

@@ -32,7 +32,17 @@ export class OzonStrategy extends ParserStrategy {
 
     const value = parseFloat(match[1].replace(",", "."));
     const unit = match[2].toLowerCase();
-    return getConvertedUnit(value, unit);
+
+    // Название — свободный текст продавца, формат непредсказуем. Поэтому учитываем
+    // мультипак только по однозначному сигналу: множитель ("х"/"x"/"×"/"*") + число + "шт",
+    // напр. "800 гр. х 6 шт." → вес одной упаковки умножаем на количество.
+    // Глиф обязателен: он отделяет настоящий мультипак ("800 г х 6 шт") от случая, когда
+    // итог уже указан, а разбивка в скобках ("4,8 кг (6 шт. по 800 г)") — там умножать нельзя.
+    // Штучные товары (unit === "шт") не трогаем: там количество и так в цене за штуку.
+    const packMatch = unit !== "шт" ? nameText.match(/[xXхХ×*]\s*(\d+)\s*шт/) : null;
+    const count = packMatch ? parseInt(packMatch[1], 10) : 1;
+
+    return getConvertedUnit(value * count, unit);
   }
 
   renderUnitPrice(cardEl: HTMLElement, unitPrice: number, unitLabel: string): void {

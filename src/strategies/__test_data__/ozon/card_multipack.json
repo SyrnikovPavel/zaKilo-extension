@@ -1,0 +1,22 @@
+{
+  "html": "<div class=\"tile-root\"><div class=\"price-wrap\"><span class=\"tsHeadline500Medium\">391 ₽</span></div><div class=\"name-wrap\"><span class=\"tsBody500Medium\">Гречневая крупа Миллант 800 гр. х 6 шт.</span></div></div>",
+  "expectedParsedPrice": 391,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 кг",
+    "multiplier": 0.20833
+  },
+  "expectedUnitPrice": {
+    "price": 81,
+    "label": "1 кг",
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.5em",
+      "color": "rgb(0, 0, 0)",
+      "background": "var(--accent-color, #00C66A20) var(--accent-color, #00C66A20)",
+      "padding": "2px 6px",
+      "borderRadius": "4px",
+      "fontWeight": "900",
+      "fontSize": "calc(0.95vw)"
+    }
+  }
+}

@@ -6,8 +6,8 @@ import convert from "convert-units";
 // Types
 type RussianUnit = keyof typeof rusToConvertUnit;
 type ConvertUnit = (typeof rusToConvertUnit)[RussianUnit];
-type TargetUnit = Extract<ConvertUnit, "kg" | "l" | "ea">;
-type ConverssionsMeasures = Extract<Measure, "mass" | "volume"> | "ea";
+type TargetUnit = Extract<ConvertUnit, "kg" | "l" | "ea" | "m" | "GB">;
+type ConverssionsMeasures = Extract<Measure, "mass" | "volume" | "length" | "digital"> | "ea";
 type MeasurableUnit = Exclude<ConvertUnit, "ea">;
 
 // Error messages
@@ -28,17 +28,32 @@ const rusToConvertUnit = {
   л: "l",
   шт: "ea",
   "шт.": "ea",
+  м: "m",
+  метр: "m",
+  метра: "m",
+  метров: "m",
+  // Объём данных (накопители): кириллица и латиница; нормализуем к гигабайтам.
+  тб: "TB",
+  tb: "TB",
+  гб: "GB",
+  gb: "GB",
+  мб: "MB",
+  mb: "MB",
 } as const;
 
 const measureToTargetUnit: Record<ConverssionsMeasures, ConvertUnit> = {
   mass: "kg",
   volume: "l",
+  length: "m",
+  digital: "GB",
   ea: "ea",
 } as const;
 
 const targetUnitLabels: Record<TargetUnit, string> = {
   kg: "1 кг",
   l: "1 л",
+  m: "1 м",
+  GB: "1 ГБ",
   ea: "1 шт",
 } as const;
 

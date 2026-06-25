@@ -123,6 +123,16 @@ describe("converters", () => {
 
         // Price per 100g
         [100, "г", { unitLabel: "1 кг", multiplier: 10, [Symbol.for("tag")]: { UnitLabel: true } } as UnitLabel],
+
+        // Length (метраж труб, кабеля)
+        [50, "м", { unitLabel: "1 м", multiplier: 0.02, [Symbol.for("tag")]: { UnitLabel: true } } as UnitLabel],
+        [1, "метр", { unitLabel: "1 м", multiplier: 1, [Symbol.for("tag")]: { UnitLabel: true } } as UnitLabel],
+        [25, "метров", { unitLabel: "1 м", multiplier: 0.04, [Symbol.for("tag")]: { UnitLabel: true } } as UnitLabel],
+
+        // Digital (ёмкость накопителей, нормализация к ГБ; ТБ и МБ по основанию 1024)
+        [500, "гб", { unitLabel: "1 ГБ", multiplier: 0.002, [Symbol.for("tag")]: { UnitLabel: true } } as UnitLabel],
+        [2, "тб", { unitLabel: "1 ГБ", multiplier: 1 / 2048, [Symbol.for("tag")]: { UnitLabel: true } } as UnitLabel],
+        [512, "мб", { unitLabel: "1 ГБ", multiplier: 2, [Symbol.for("tag")]: { UnitLabel: true } } as UnitLabel],
       ])("should convert %i %s to standard unit", (value, unit, expected) => {
         expect(getConvertedUnit(value, unit)).toEqual(expected);
       });

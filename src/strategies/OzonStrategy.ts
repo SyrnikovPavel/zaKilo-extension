@@ -25,7 +25,15 @@ export class OzonStrategy extends ParserStrategy {
 
   parseQuantity(cardEl: HTMLElement): UnitLabel | NoneUnitLabel {
     const nameText = cardEl.querySelector(this.selectors.name)?.textContent?.trim() ?? "";
-    const regex = /([\d.,]+)\s*(г|гр|кг|мл|л|шт)/i;
+    // Единицы трёх типов, чтобы не путать с «соседними» обозначениями в названии:
+    //  • объём данных (накопители): тб/гб/мб + латиница; (?!ит) отсекает скорость
+    //    интерфейса «6 Гбит/с», иначе ёмкость спуталась бы с гигабитами;
+    //  • метраж (трубы, кабель): длина в метрах, диаметр и стенка — в мм, поэтому
+    //    м(?![мб]) отсекает «мм» и «Мбит»;
+    //  • вес/объём: граммы г(?!б), чтобы одиночное «г» не цеплялось за «Гбит/ГБ».
+    // Цифровые единицы стоят раньше г/м: при разборе важен порядок альтернатив.
+    const regex =
+      /([\d.,]+)\s*(тб|tb|гб(?!ит)|gb|мб(?!ит)|mb|кг|гр|г(?!б)|мл|л|шт|метров|метра|метр|м(?![мб]))/i;
     const match = nameText.match(regex);
 
     if (!match) return { unitLabel: null, multiplier: null } as NoneUnitLabel;

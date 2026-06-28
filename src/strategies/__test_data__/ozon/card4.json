@@ -3,10 +3,10 @@
   "expectedParsedPrice": 1222,
   "expectedParsedQuantity": {
     "unitLabel": "1 л",
-    "multiplier": 1.053
+    "multiplier": 0.0877
   },
   "expectedUnitPrice": {
-    "price": 1287,
+    "price": 107,
     "label": "1 л",
     "styles": {
       "display": "inline-block",

@@ -16,37 +16,60 @@ export class KuperStrategy extends ParserStrategy {
   }
 
   parsePrice(cardEl: HTMLElement): number {
-    const priceString = cardEl.querySelector(this.selectors.price)?.textContent;
-    const fallbackPriceRegex = /(\d+,\d+)/;
-    const fallbackMatch = priceString?.match(fallbackPriceRegex);
-    const fallbackTextPrice = fallbackMatch ? fallbackMatch[1].replace(",", ".") : null;
-    const fallbackV = parseFloat(fallbackTextPrice ?? "");
-    if (isNaN(fallbackV)) throw new Error("Цена не распознана: " + priceString);
-    return fallbackV;
+    const priceString = cardEl.querySelector(this.selectors.price)?.textContent ?? "";
+    // Купер разделяет разряды (неразрывным) пробелом: "1 149,00" -> "1149,00"
+    const normalized = priceString.replace(/(\d)\s(?=\d)/g, "$1");
+    const match = normalized.match(/(\d+,\d+)/);
+    const price = parseFloat(match ? match[1].replace(",", ".") : "");
+    if (isNaN(price)) throw new Error("Цена не распознана: " + priceString);
+    return price;
   }
 
   parseQuantity(cardEl: HTMLElement): UnitLabel | NoneUnitLabel {
-    const volumeText = this.selectors?.volume ? cardEl.querySelector(this.selectors.volume)?.textContent || "" : "";
-    const nameText = cardEl.querySelector(this.selectors.name)?.getAttribute("title") || "";
-    const volumeString = nameText || volumeText;
+    // Поле объёма у Купера ненадёжно (показывает "1 шт." или прикидку массы),
+    // поэтому количество берём из полного названия. Название -- свободный текст
+    // продавца, в textContent оно обрезается, а полный текст лежит в title/aria.
+    const nameEl = cardEl.querySelector(this.selectors.name);
+    const name = (
+      nameEl?.getAttribute("title") ||
+      nameEl?.getAttribute("aria-label") ||
+      nameEl?.textContent ||
+      ""
+    ).trim();
+    this.log("kuper name", name);
 
-    this.log("volumeString", volumeText);
-    this.log("nameText", nameText);
+    const MASS = "кг|гр|г|мл|л";
+    const s = name.toLowerCase();
 
-    const s = volumeString.trim().toLowerCase().replace(",", ".");
-    const match = s.match(/([\d]+(?:\.\d+)?)\s*(г|гр|кг|мл|л|шт)\.?/i);
+    // Число перед самостоятельной единицей. Lookahead пропускает проценты
+    // ("3,2%") и единицы, склеенные со словом.
+    const mass = s.match(new RegExp(`([\\d.,]+)\\s*(${MASS})(?![а-яё%])`, "i"));
+    const pieces = s.match(/(\d+)\s*шт/i);
 
-    if (match) {
-      const totalText = match[1].replace(",", ".");
-      const total = Number(totalText);
-      if (isNaN(total)) throw new Error("Неверный формат числа: " + totalText);
-      const unit = match[2];
-
-      this.log("Name: totalText, total, unit", totalText, total, unit);
-      return getConvertedUnit(total, unit);
-    } else {
-      throw new Error("Обьем не распознан.");
+    // 1. Мультипак: в имени одновременно и штуки, и вес ("5 шт х 80 г").
+    //    Суммарный вес берём из отдельного блока объёма -- Купер уже посчитал
+    //    итог ("400 г"), это надёжнее, чем перемножать свободный текст имени.
+    if (mass && pieces) {
+      const volumeText = (this.selectors.volume && cardEl.querySelector(this.selectors.volume)?.textContent) || "";
+      // В слоте объёма разряд отделён (неразрывным) пробелом: "1 000 г" -> "1000 г".
+      const total = volumeText
+        .toLowerCase()
+        .replace(/(\d)\s(?=\d)/g, "$1")
+        .match(new RegExp(`([\\d.,]+)\\s*(${MASS})`, "i"));
+      if (total) return getConvertedUnit(parseFloat(total[1].replace(",", ".")), total[2]);
+      // Мультипак без итога в слоте -- не угадываем перемножением имени.
+      return { unitLabel: null, multiplier: null } as NoneUnitLabel;
     }
+
+    // 2. Одиночная масса/объём.
+    if (mass) return getConvertedUnit(parseFloat(mass[1].replace(",", ".")), mass[2]);
+
+    // 3. Чистые штуки (яйца и т.п.): "<N> шт" без массы. Блок объёма тут
+    //    ненадёжен (Купер кладёт туда прикидку массы), считаем за штуку из имени.
+    if (pieces) return getConvertedUnit(parseInt(pieces[1], 10), "шт");
+
+    // 4. Количество не распознано.
+    return { unitLabel: null, multiplier: null } as NoneUnitLabel;
   }
 
   renderUnitPrice(cardEl: Element, unitPrice: number, unitLabel: string): void {

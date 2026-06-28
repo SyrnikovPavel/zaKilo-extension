@@ -1,0 +1,17 @@
+{
+  "html": "<a class=\"ProductCardLink_root__l\"><div class=\"ProductCardGridLayout_root__g\"><div class=\"ProductCardGridLayout_bottom__b\"><div class=\"ProductCard_titleContainer__c\"><h3 class=\"ProductCard_title__h\" data-qa=\"kuper_item_title\">Крупа гречневая Алтайская сказка</h3></div><div class=\"ProductCardPriceWrapper_root__w\"><div class=\"ProductCard_price__p\"><div class=\"ProductCardPrice_price__z CommonProductCard_priceText__x\" data-qa=\"kuper_item_price\"><span class=\"SROnly_root__s\">Цена со скидкой за 1 шт.</span>65,00 ₽</div></div></div></div></div></a>",
+  "expectedParsedPrice": 65,
+  "expectedNoneUnitPrice": {
+    "text": "Нет инф.",
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.5em",
+      "color": "rgb(0, 0, 0)",
+      "background": "var(--accent-color,rgba(0, 69, 198, 0.13)) var(--accent-color,rgba(0, 69, 198, 0.13))",
+      "padding": "2px 6px",
+      "borderRadius": "4px",
+      "fontWeight": "900",
+      "fontSize": "calc(0.95vw)"
+    }
+  }
+}

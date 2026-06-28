@@ -1,0 +1,22 @@
+{
+  "html": "<a class=\"ProductCardLink_root__l\"><div class=\"ProductCardGridLayout_root__g\"><div class=\"ProductCardGridLayout_bottom__b\"><div class=\"ProductCard_titleContainer__c\"><h3 class=\"ProductCard_title__h\" data-qa=\"kuper_item_title\">Сыр Пармезан выдержанный 12 месяцев 200 г</h3></div><div class=\"ProductCardPriceWrapper_root__w\"><div class=\"ProductCard_price__p\"><div class=\"ProductCardPrice_price__z CommonProductCard_priceText__x\" data-qa=\"kuper_item_price\"><span class=\"SROnly_root__s\">Цена за 1 шт.</span>1 290,00 ₽</div></div></div></div></div></a>",
+  "expectedParsedPrice": 1290,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 кг",
+    "multiplier": 5
+  },
+  "expectedUnitPrice": {
+    "price": 6450,
+    "label": "1 кг",
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.5em",
+      "color": "rgb(0, 0, 0)",
+      "background": "var(--accent-color, #00C66A20) var(--accent-color, #00C66A20)",
+      "padding": "2px 6px",
+      "borderRadius": "4px",
+      "fontWeight": "900",
+      "fontSize": "calc(0.95vw)"
+    }
+  }
+}

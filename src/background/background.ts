@@ -102,6 +102,9 @@ api.runtime.onInstalled.addListener((details) => {
       case "1.0.3":
         api.tabs.create({ url: "https://zakilo.syrnikovpavel.ru/1.0.3" });
         break;
+      case "1.0.14":
+        api.tabs.create({ url: "https://zakilo.syrnikovpavel.ru/1.0.14" });
+        break;
       default:
         // Для остальных версий ничего не открываем
         break;

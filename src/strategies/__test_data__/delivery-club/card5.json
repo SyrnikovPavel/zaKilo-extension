@@ -1,0 +1,19 @@
+{
+  "html": "<li class=\"DesktopComponentsSlidedCarousel_item_i1ckqckj DesktopGoodsCarousel_item_i1jfluux DesktopComponentsSlidedCarousel_leftAlign_l1mqg1o5\" data-carousel-item=\"true\"><div class=\"DesktopComponentsSlidedCarousel_innerItem_iowwdop DesktopGoodsCarousel_stretchItem_s1p28lfb DesktopComponentsSlidedCarousel_visible_vovdwg3\" data-testid=\"slided-carousel-item\"><div class=\"DesktopGoodsCarousel_stretchItem_s1p28lfb\"><div class=\"UiKitDesktopProductCard_root_260e204f UiKitDesktopProductCard_main_8c8dedc4 UiKitDesktopProductCard_s_4162e863 UiKitDesktopProductCard_eats_bc106920 UiKitDesktopProductCard_clickable_7bb22ef0 DesktopGoodsCarousel_stretchItem_s1p28lfb\" totaloldprice=\"220\" description=\"\" data-testid=\"product-card-root\"><a class=\"UiKitDesktopProductCard_fakeWrapper_ae172241\" aria-disabled=\"false\" aria-label=\"Холодный чай Липтон (Lipton) Зеленый чай 1.5 л, Цена 195&thinsp;₽ вместо 220&thinsp;₽, 1.5л\" href=\"/retail/paterocka/product/3acbe517-7649-4e02-b3d7-f51b1432e268?placeSlug=pyaterochka_m86ph\"></a><div class=\"UiKitDesktopProductCard_pictureWrapper_c19a9f9c UiKitDesktopProductCard_eats_bc106920\"><div data-testid=\"product-card-image\" class=\"UiKitSmartImage_root_b223d267 UiKitSmartImage_hideCover_1512647e UiKitDesktopProductCard_picture_74fd3a06 UiKitDesktopProductCard_eats_bc106920\"><div class=\"UiKitSmartImage_cover_c2bcb300\"></div><img alt=\"\" class=\"UiKitSmartImage_image_f04c9291 UiKitSmartImage_containFitImg_3012c5fc UiKitSmartImage_visibleImg_2939ae19 UiKitSmartImage_animatedImg_9b4a9943\" data-testid=\"smart-image-img\" loading=\"lazy\" src=\"https://avatars.mds.yandex.net/get-eda/15252145/7687a92c6f507773bc5f4dba8e827a1f/400x400nocrop\"></div><div class=\"UiKitDesktopProductCard_tokensWrapper_2ebc69b7\"><div class=\"UiKitToken_root_7ffafc25 UiKitToken_l_d576d713 UiKitDesktopProductCard_token_6a3499d8 UiKitToken_leftRotated_317954ec\" style=\"--Token-box-shadow-prop: 0px 2px 5px #02915480; --Token-color-prop: #FFFFFF; --Token-background-color-prop: #029154;\"><span class=\"UiKitToken_content_5c04f18c\" data-testid=\"card-badge-icon\">–11%</span></div></div></div><div class=\"UiKitDesktopProductCard_descriptionWrapper_1931ec89\"><div class=\"UiKitDesktopProductCard_priceWrapper_8c5922f9\" aria-hidden=\"true\"><span class=\"UiKitText_root_163664c1 UiKitPrice_root_7095f023 UiKitPrice_l_f6795af8 UiKitPrice_new_2dea1239 UiKitPrice_design-eats_96c51670 UiKitDesktopProductCard_price_6279c5e5 UiKitText_Body2_c0593312 UiKitText_Medium_38c1c300 UiKitText_Text_3071665c\" data-testid=\"product-card-price\">195 ₽</span><span class=\"UiKitText_root_163664c1 UiKitPrice_root_7095f023 UiKitPrice_l_f6795af8 UiKitPrice_old_8089d7e4 UiKitPrice_design-eats_96c51670 UiKitText_Body2_c0593312 UiKitText_Medium_38c1c300 UiKitText_Text_3071665c\" data-testid=\"product-card-old-price\">220 ₽</span></div><div class=\"UiKitText_root_163664c1 UiKitDesktopProductCard_name_0f7e1efe UiKitDesktopProductCard_eats_bc106920 UiKitText_Body2Loose_34fb010c UiKitText_Regular_6d8f4b07 UiKitText_Text_3071665c\" data-testid=\"product-card-name\" title=\"Холодный чай Липтон (Lipton) Зеленый чай 1.5 л\">Холодный чай Липтон (Lipton) Зеленый чай 1.5 л</div><div data-testid=\"product-card-weight\" class=\"UiKitDesktopProductCard_weight_1d59d357 UiKitDesktopProductCard_eats_bc106920\">1.5&nbsp;л</div></div></div></div></div></li>",
+  "expectedParsedPrice": 195,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 л",
+    "multiplier": 0.667
+  },
+  "expectedUnitPrice": {
+    "price": 130,
+    "label": "1 л",
+    "styles": {
+      "color": "rgb(0, 0, 0)",
+      "backgroundColor": "rgba(0, 198, 106, 0.1)",
+      "padding": "2px 6px 2px 0.5px",
+      "borderRadius": "0.25em",
+      "fontWeight": "500"
+    }
+  }
+}

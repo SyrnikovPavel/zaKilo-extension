@@ -1,5 +1,5 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
-import type { NoneUnitLabel, UnitLabel } from "@/types/IStrategy";
+import { isUnitLabel, type NoneUnitLabel, type UnitLabel } from "@/types/IStrategy";
 import { getConvertedUnit, roundNumber } from "@/utils/converters";
 
 export class PerekrestokStrategy extends ParserStrategy {
@@ -7,30 +7,43 @@ export class PerekrestokStrategy extends ParserStrategy {
     super();
     this.strategyName = "Perekrestok";
     this.selectors = {
-      card: "[data-testid=product-card-root]",
-      price: "[data-testid=product-card-price]",
-      name: "[data-testid=product-card-name]",
-      volume: "[data-testid=product-card-weight]",
-      unitPrice: "[data-testid='unit-price']",
+      card: ".product-card",
+      price: ".product-card__price .price-new",
+      name: ".product-card__title, .product-card__title-link",
+      volume: ".product-card__size",
+      priceUnit: ".product-card__pricing",
+      unitPrice: '[data-testid="unit-price"]',
+      renderRoot: ".product-card__price",
     };
   }
 
-  shouldProcess(cardEl: HTMLElement): boolean {
-    return Boolean(cardEl.querySelector(this.selectors.price) && cardEl.querySelector(this.selectors.name));
+  private parseWeightText(text: string): UnitLabel | NoneUnitLabel | null {
+    const normalized = text.trim().toLowerCase().replace(/\s+/g, " ").replace(/,/g, ".");
+    const mulMatch = normalized.match(/^(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)\s*([^\s\d]+)/i);
+    if (mulMatch) {
+      const total = parseFloat(mulMatch[1]) * parseFloat(mulMatch[2]);
+      const result = getConvertedUnit(total, mulMatch[3]);
+      return isUnitLabel(result) ? result : null;
+    }
+
+    const matches = [...normalized.matchAll(/([\d.]+)\s*(г|гр|кг|мл|л|шт)/gi)];
+    if (matches.length === 0) return null;
+
+    const preferred = matches.find((m) => m[2] !== "шт") ?? matches[matches.length - 1];
+    const result = getConvertedUnit(parseFloat(preferred[1]), preferred[2]);
+    return isUnitLabel(result) ? result : null;
   }
 
   parsePrice(cardEl: HTMLElement): number {
-    const priceString = cardEl.querySelector(this.selectors.price)?.textContent;
+    const priceString = cardEl.querySelector(this.selectors.price)?.textContent?.trim() ?? "";
     this.log("parsed price text", priceString);
     const priceRegex = /(?<!\d)([0-9]{1,3}(?:[ \u00A0][0-9]{3})*(?:[.,][0-9]+)?)[ \u00A0]*₽/u;
-    const match = priceString?.match(priceRegex);
+    const match = priceString.match(priceRegex);
     if (!match) {
       throw new Error("Цена не распознана: " + priceString);
     }
 
-    const textPrice = match[1].replace(/[ \u00A0]/g, "").replace(",", ".");
-
-    const value = parseFloat(textPrice);
+    const value = parseFloat(match[1].replace(/[ \u00A0]/g, "").replace(",", "."));
     if (isNaN(value)) {
       throw new Error("Цена не распознана: " + priceString);
     }
@@ -39,40 +52,29 @@ export class PerekrestokStrategy extends ParserStrategy {
   }
 
   parseQuantity(cardEl: HTMLElement): UnitLabel | NoneUnitLabel {
-    let quantityText: string;
-    if (this.selectors?.volume) {
-      quantityText = cardEl.querySelector(this.selectors.volume)?.textContent?.trim() ?? "";
-    } else {
-      quantityText = cardEl.querySelector(this.selectors.name)?.textContent?.trim() ?? "";
+    const sizeText = cardEl.querySelector(this.selectors.volume!)?.textContent?.trim() ?? "";
+    if (sizeText) {
+      const fromSize = this.parseWeightText(sizeText);
+      if (fromSize && isUnitLabel(fromSize)) return fromSize;
     }
 
-    const s = quantityText.trim().toLowerCase().replace(/,/g, ".");
-    const mulMatch = s.match(/^(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)\s*([^\s\d]+)/i);
-    let total: number;
-    let unit: string;
-    if (mulMatch) {
-      const count = parseFloat(mulMatch[1]);
-      const per = parseFloat(mulMatch[2]);
-      unit = mulMatch[3];
-      total = count * per;
-    } else {
-      const m = s.match(/([\d.]+)\s*([^\s\d]+)/);
-      if (!m) throw new Error(`не распознано количество: "${quantityText}"`);
-      total = parseFloat(m[1]);
-      unit = m[2];
-    }
-    return getConvertedUnit(total, unit);
+    const pricingText = cardEl.querySelector(this.selectors.priceUnit!)?.textContent?.toLowerCase() ?? "";
+    if (/\/кг/.test(pricingText)) return { unitLabel: "1 кг", multiplier: 1 } as UnitLabel;
+    if (/\/л/.test(pricingText)) return { unitLabel: "1 л", multiplier: 1 } as UnitLabel;
+
+    const nameText = cardEl.querySelector(this.selectors.name)?.textContent?.trim() ?? "";
+    const fromName = this.parseWeightText(nameText);
+    if (fromName && isUnitLabel(fromName)) return fromName;
+
+    return {
+      unitLabel: null,
+      multiplier: null,
+    } as NoneUnitLabel;
   }
 
   renderUnitPrice(cardEl: HTMLElement, unitPrice: number, unitLabel: string): void {
-    const wrapper = cardEl.querySelector(this.selectors.price)?.closest("div");
+    const wrapper = cardEl.querySelector(this.selectors.renderRoot!);
     if (!wrapper) throw new Error("Не найден элемент для отображения цены");
-
-    const fz = "calc(0.95vw)";
-
-    wrapper.style.fontSize = fz;
-    // @ts-expect-error
-    wrapper.parentElement.style.fontSize = fz;
 
     wrapper.querySelectorAll(this.selectors.unitPrice).forEach((el) => el.remove());
 
@@ -87,20 +89,14 @@ export class PerekrestokStrategy extends ParserStrategy {
       padding: "2px 6px",
       borderRadius: "4px",
       fontWeight: "900",
-      fontSize: fz,
+      fontSize: "12px",
     });
     wrapper.append(span);
   }
 
   renderNoneUnitPrice(cardEl: HTMLElement): void {
-    const wrapper = cardEl.querySelector(this.selectors.price)?.closest("div");
+    const wrapper = cardEl.querySelector(this.selectors.renderRoot!);
     if (!wrapper) throw new Error("Не найден элемент для отображения цены");
-
-    const fz = "calc(0.95vw)";
-
-    wrapper.style.fontSize = fz;
-    // @ts-expect-error
-    wrapper.parentElement.style.fontSize = fz;
 
     wrapper.querySelectorAll(this.selectors.unitPrice).forEach((el) => el.remove());
 
@@ -115,7 +111,7 @@ export class PerekrestokStrategy extends ParserStrategy {
       padding: "2px 6px",
       borderRadius: "4px",
       fontWeight: "900",
-      fontSize: fz,
+      fontSize: "12px",
     });
     wrapper.append(span);
   }

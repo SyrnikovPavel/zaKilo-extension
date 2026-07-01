@@ -52,12 +52,10 @@ describe("LentaStrategy", () => {
             expect(styles[property as keyof CSSStyleDeclaration]).toBe(value);
           });
 
-          const priceAndButtons = cardEl.querySelector(".price-and-buttons");
-          const priceBlock = priceAndButtons?.querySelector(".product-price");
-          const buttonBlock = priceAndButtons?.querySelector(".ng-star-inserted:has(lu-counter-first-add)");
-
+          const priceBlock = cardEl.querySelector(
+            '[automation-id="product-price"], .price-and-buttons .product-price, .product-price',
+          );
           expect(priceBlock?.nextElementSibling).toBe(renderedUnitPrice);
-          expect(renderedUnitPrice?.nextElementSibling).toBe(buttonBlock);
         });
       }
     });

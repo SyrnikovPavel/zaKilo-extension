@@ -1,0 +1,19 @@
+{
+  "html": "<div class=\"column__Ll1iG\" role=\"listitem\" data-testid=\"products-list-column\"><div data-testid=\"product-id-c1d572eed5c84c5d8d3ac951b088ceb7000300020002\" data-hidden=\"false\" class=\"ProductCard__xpfKY\"><div class=\"card__YEj7F ProductSnippet__mDHZc\" data-testid=\"product-card\"><a data-type=\"product-card-link\" href=\"/good/cmes-tyortyh-syrov-iz-lavki-45percent-150-gram\" class=\"plate__FHOgz\"><span class=\"linkContent__jv1UI A11yText__Zaw4D\" role=\"text\">Смесь тёр&shy;тых сыров &lt;notr&gt;Из&nbsp;Лавки&lt;/notr&gt; 150 г</span></a><div class=\"card__Je1oy\"><div class=\"info__rOj8v infoSize_l__BQ2zz\"><div class=\"reversedTopInfo__dqgdb\"><div class=\"TruncatedText__ElA0m\" aria-hidden=\"true\"><h3 class=\"Typography__k5iWm variant_body2__edXDs weight_regular__zgyGp weightVariant_body2_regular__coneH leading_body2_normal__GJpTv align_left__eJili\"><span class=\"text__MQRtr Typography__k5iWm variant_body2__edXDs weight_regular__zgyGp weightVariant_body2_regular__coneH leading_body2_normal__GJpTv align_left__eJili\">Смесь тёр&shy;тых сыров Из&nbsp;Лавки </span><span class=\"extraText__HFygC\">150 г</span></h3></div><div class=\"priceWrapper__RUhLD\"><div class=\"Price__qGx7j\" role=\"text\" data-testid=\"price-block\"><span class=\"A11yText__Zaw4D\" role=\"text\">139 ₽ вместо обычной цены 199 ₽</span><span class=\"Text__Y3M28\"><span class=\"priceContainer__lP_Kb\"><span class=\"valueActiveSize_body1__n9GcD Typography__k5iWm variant_body1__BgiqS weight_medium__X4556 weightVariant_body1_medium__o0wTi leading_body1_tight__Kvu5v align_left__eJili\" aria-hidden=\"true\" data-testid=\"price-text\" style=\"color: rgb(var(--color-cinnabar-toxic));\">139 ₽</span></span><span class=\"CrossedWrapper__bbYw5\"><span class=\"Typography__k5iWm variant_body2__edXDs weight_regular__zgyGp weightVariant_body2_regular__coneH leading_body2_tight__kfXG9 align_left__eJili\" aria-hidden=\"true\" data-testid=\"price-old-text\" style=\"color: var(--theme-text-minor);\">199 ₽</span></span></span></div></div></div></div></div></div></div></div>",
+  "expectedParsedPrice": 139,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 кг",
+    "multiplier": 6.667
+  },
+  "expectedUnitPrice": {
+    "price": 927,
+    "label": "1 кг",
+    "styles": {
+      "color": "rgb(0, 0, 0)",
+      "backgroundColor": "rgba(0, 198, 106, 0.1)",
+      "padding": "2px 3px 2px 3px",
+      "borderRadius": "0.25em",
+      "fontWeight": "500"
+    }
+  }
+}

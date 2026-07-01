@@ -1,5 +1,5 @@
 import { ParserStrategy } from "@/core/ParserStrategy";
-import type { NoneUnitLabel, UnitLabel } from "@/types/IStrategy";
+import { isUnitLabel, type NoneUnitLabel, type UnitLabel } from "@/types/IStrategy";
 import { getConvertedUnit, roundNumber } from "@/utils/converters";
 
 export class LentaStrategy extends ParserStrategy {
@@ -7,12 +7,29 @@ export class LentaStrategy extends ParserStrategy {
     super();
     this.strategyName = "Lenta";
     this.selectors = {
-      card: ".product-card",
-      name: "[automation-id='catProductName']",
+      card: 'a.product-card, a[automation-id="productCard"]',
+      name: "[automation-id='product-names'], [automation-id='catProductName']",
       volume: ".product-position-price .price, .card-name_package",
-      price: ".main-price",
+      price: '[automation-id="product-price"] .main-price, .price-and-buttons .main-price, .main-price',
       unitPrice: '[data-testid="unit-price"]',
     };
+  }
+
+  private findPriceBlock(cardEl: Element): HTMLElement {
+    const priceBlock = cardEl.querySelector('[automation-id="product-price"], .price-and-buttons .product-price, .product-price');
+    if (!priceBlock) throw new Error("Блок цены не найден");
+    return priceBlock as HTMLElement;
+  }
+
+  private parseWeightText(text: string): UnitLabel | NoneUnitLabel | null {
+    const normalized = text.trim().toLowerCase().replace(/\s+/g, " ");
+    const match = normalized.match(/([\d.,]+)\s*(г|гр|кг|мл|л|шт)/i);
+    if (!match) return null;
+
+    const value = parseFloat(match[1].replace(",", "."));
+    if (isNaN(value)) return null;
+
+    return getConvertedUnit(value, match[2]);
   }
 
   parsePrice(cardEl: HTMLElement): number {
@@ -20,11 +37,12 @@ export class LentaStrategy extends ParserStrategy {
     if (!priceElement) throw new Error("Элемент цены не найден");
 
     const priceText = priceElement.textContent?.trim() || "";
-    const priceMatch = priceText.match(/(\d+,\d+)/);
+    const priceRegex = /(?<!\d)([0-9]{1,3}(?:[ \u00A0\u202F][0-9]{3})*(?:[.,][0-9]+)?)/u;
+    const priceMatch = priceText.match(priceRegex);
 
     if (!priceMatch) throw new Error("Цена не распознана: " + priceText);
 
-    const price = parseFloat(priceMatch[1].replace(",", "."));
+    const price = parseFloat(priceMatch[1].replace(/[ \u00A0\u202F]/g, "").replace(",", "."));
     if (isNaN(price)) throw new Error("Неверный формат цены: " + priceText);
 
     return price;
@@ -42,30 +60,28 @@ export class LentaStrategy extends ParserStrategy {
 
     const pkgEl = cardEl.querySelector(".card-name_package");
     if (pkgEl) {
-      const pkgText = pkgEl.textContent?.trim() || "";
-      const mPkg = pkgText.match(/(\d+)(г|гр|кг|мл|л|шт)/i);
-      if (mPkg) {
-        return getConvertedUnit(parseInt(mPkg[1], 10), mPkg[2].toLowerCase());
-      }
+      const fromPackage = this.parseWeightText(pkgEl.textContent ?? "");
+      if (fromPackage && isUnitLabel(fromPackage)) return fromPackage;
     }
 
-    const nameEl = cardEl.querySelector("[automation-id='catProductName']") as HTMLElement;
+    const nameEl = cardEl.querySelector(
+      "[automation-id='catProductName'], [automation-id='product-names'], .lu-product-card-name[title]",
+    ) as HTMLElement | null;
     if (nameEl) {
-      const title = nameEl.getAttribute("title") || "";
-      const mTitle = title.match(/(\d+)(г|гр|кг|мл|л|шт)/i);
-      if (mTitle) {
-        return getConvertedUnit(parseInt(mTitle[1], 10), mTitle[2].toLowerCase());
-      }
+      const title = nameEl.getAttribute("title") || nameEl.textContent || "";
+      const fromTitle = this.parseWeightText(title);
+      if (fromTitle && isUnitLabel(fromTitle)) return fromTitle;
     }
 
     const labelEl = cardEl.querySelector(".product-position-price .price");
     if (labelEl) {
       const labelTxt = labelEl.textContent?.trim() || "";
-      const mLabel = labelTxt.match(/Цена за\s*(\d+)\s*(г|гр|кг|мл|л|шт)/i);
+      const mLabel = labelTxt.match(/Цена за\s*([\d.,]+)\s*(г|гр|кг|мл|л|шт)/i);
       if (mLabel) {
-        return getConvertedUnit(parseInt(mLabel[1], 10), mLabel[2].toLowerCase());
+        return getConvertedUnit(parseFloat(mLabel[1].replace(",", ".")), mLabel[2]);
       }
     }
+
     return {
       unitLabel: null,
       multiplier: null,
@@ -73,17 +89,14 @@ export class LentaStrategy extends ParserStrategy {
   }
 
   renderUnitPrice(cardEl: Element, unitPrice: number, unitLabel: string): void {
-    const priceWrapper = cardEl.querySelector(".price-and-buttons") as HTMLElement;
-    if (!priceWrapper) {
-      throw new Error("Wrapper цены не найден");
-    }
+    const priceBlock = this.findPriceBlock(cardEl);
 
-    priceWrapper.querySelectorAll('[data-testid="unit-price"]').forEach((el) => el.remove());
+    cardEl.querySelectorAll('[data-testid="unit-price"]').forEach((el) => el.remove());
+
     const span = document.createElement("span");
     span.setAttribute("data-testid", "unit-price");
     span.textContent = `${roundNumber(unitPrice, 0)}\u2009₽/${unitLabel}`;
 
-    // 4. Добавить стили
     const fz = "calc(0.7vw)";
     Object.assign(span.style, {
       display: "inline-block",
@@ -97,28 +110,18 @@ export class LentaStrategy extends ParserStrategy {
       fontSize: fz,
     });
 
-    // 5. Найти блок с основной ценой
-    const priceBlock = priceWrapper.querySelector(".product-price");
-    if (!priceBlock) {
-      throw new Error("Блок цены не найден");
-    }
-
-    // 6. Вставить span сразу после .product-price
     priceBlock.after(span);
   }
-  renderNoneUnitPrice(cardEl: Element): void {
-    const priceWrapper = cardEl.querySelector(".price-and-buttons") as HTMLElement;
-    if (!priceWrapper) {
-      throw new Error("Wrapper цены не найден");
-    }
 
-    priceWrapper.querySelectorAll('[data-testid="unit-price"]').forEach((el) => el.remove());
+  renderNoneUnitPrice(cardEl: Element): void {
+    const priceBlock = this.findPriceBlock(cardEl);
+
+    cardEl.querySelectorAll('[data-testid="unit-price"]').forEach((el) => el.remove());
 
     const span = document.createElement("span");
     span.setAttribute("data-testid", "unit-price");
     span.textContent = "Нет инф.";
 
-    // Добавить стили
     const fz = "calc(0.7vw)";
     Object.assign(span.style, {
       display: "inline-block",
@@ -132,13 +135,6 @@ export class LentaStrategy extends ParserStrategy {
       fontSize: fz,
     });
 
-    // Найти блок с основной ценой
-    const priceBlock = priceWrapper.querySelector(".product-price");
-    if (!priceBlock) {
-      throw new Error("Блок цены не найден");
-    }
-
-    // Вставить span сразу после .product-price
     priceBlock.after(span);
   }
 }

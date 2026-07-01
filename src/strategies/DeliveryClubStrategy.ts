@@ -10,10 +10,10 @@ export class DeliveryClubStrategy extends ParserStrategy {
       card: ['li[data-carousel-item="true"]', 'li.DesktopGoodsList_item', ".DesktopGoodsList_list li", 'div[data-testid="product-card-root"]'].join(
         ",",
       ),
-      price: '.p1jdj7iy span',
-      name: '.nsawvb6',
-      unitPrice: '[data-testid="product-card-unit-price"]',
-      volume: '.wpsxpb7'
+      price: '[data-testid="product-card-price"]',
+      name: '[data-testid="product-card-name"]',
+      unitPrice: '[data-testid="unit-price"]',
+      volume: '[data-testid="product-card-weight"]',
     };
   }
 

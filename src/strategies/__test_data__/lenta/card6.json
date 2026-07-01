@@ -1,0 +1,23 @@
+{
+  "html": "<a automation-id=\"productCard\" class=\"product-card small-vertical\" href=\"https://lenta.com/product/kurinoe-file-s-grudki-polufabrikat-ohlazhdennyjj-ves-rossiya-011991/\"><div class=\"product-card_top-content\"><lu-product-card-image><div automation-id=\"product-card-image-btn\" class=\"lu-product-card-image-link\" title=\"Филе грудки куриное ЛЕНТА FRESH, весовое\"><lu-img-responsive><img class=\"lu-product-card-image\" src=\"https://cdn.api.lenta.com/resample/webp/250x250/photo/11991/13510e61-cb87-4c8d-9e10-d08b534d47fb.png\" alt=\"Филе грудки куриное ЛЕНТА FRESH, весовое, детальное фото\"></lu-img-responsive></div></lu-product-card-image></div><div class=\"product-card_middle-content\"><div class=\"product-card_base-info\"><div class=\"product-card_name-block-wrapper\"><lu-product-card-name><div class=\"lu-product-card-name-wrapper\"><div automation-id=\"product-card-in-slider\" class=\"lu-product-card-name lu-product-card-name_sale\" title=\"Филе грудки куриное ЛЕНТА FRESH, весовое\"><span class=\"name-wrapper\"><span automation-id=\"product-names\" class=\"card-name_content\"> Филе грудки куриное ЛЕНТА FRESH, весовое </span><p class=\"card-name_package\"> 0.5 кг </p></span></div></div></lu-product-card-name></div><div class=\"product-position-price _margin\"><span class=\"price\">394,99 ₽ за 1 кг</span></div></div><lu-product-card-footer><span class=\"product-with-card\">С Картой №1</span><div class=\"product-card-footer-content\"><lu-product-card-price><lu-price-with-badge><div automation-id=\"product-price\" class=\"product-price\"><span class=\"main-price main-price-accent\"> 197,50&nbsp;₽ </span><div class=\"old-price-product\"><span>289,50&nbsp;₽</span><span class=\"discount-badge\">-31%</span></div></div></lu-price-with-badge></lu-product-card-price></div></lu-product-card-footer></div></a>",
+  "expectedParsedPrice": 197.5,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 кг",
+    "multiplier": 2
+  },
+  "expectedUnitPrice": {
+    "price": 395,
+    "label": "1 кг",
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.4em",
+      "marginRight": "0.4em",
+      "color": "rgb(0, 0, 0)",
+      "padding": "2px",
+      "borderRadius": "4px",
+      "backgroundColor": "rgb(230, 245, 239)",
+      "fontWeight": "900",
+      "fontSize": "calc(0.7vw)"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "html": "<a automation-id=\"productCard\" class=\"product-card small-vertical\" href=\"https://lenta.com/product/konki-rolikovye-razdvizhnye-r34-37-so-svetyashchimsya-kolesom-ddev-pw-117light-kitajj-725868/\"><div class=\"product-card_middle-content\"><div class=\"base-info\"><div class=\"product-card_name-block-wrapper\"><lu-product-card-name><div class=\"lu-product-card-name-wrapper\"><div automation-id=\"product-card-in-slider\" class=\"lu-product-card-name\" title=\"Коньки роликовые раздвижные для девочки ACTIWELL р. 34–37, со светящимся колесом, Арт. PW-117light\"><span class=\"name-wrapper\"><span automation-id=\"product-names\" class=\"card-name_content\"> Коньки роликовые раздвижные для девочки ACTIWELL р. 34–37, со светящимся колесом, Арт. PW-117light </span><p class=\"card-name_package\">  </p></span></div></div></lu-product-card-name></div><div class=\"product-position-price _margin\"><span class=\"price\">Цена за 1 шт</span></div></div><lu-product-card-footer><div class=\"product-card-footer-content\"><lu-product-card-price><lu-price-with-badge><div automation-id=\"product-price\" class=\"product-price\"><span class=\"main-price main-price-accent\"> 1&nbsp;599,99&nbsp;₽ </span><div class=\"old-price-product\"><span>5&nbsp;998,95&nbsp;₽</span></div></div></lu-price-with-badge></lu-product-card-price></div></lu-product-card-footer></div></a>",
+  "expectedParsedPrice": 1600,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 шт",
+    "multiplier": 1
+  },
+  "expectedUnitPrice": {
+    "price": 1600,
+    "label": "1 шт",
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.4em",
+      "marginRight": "0.4em",
+      "color": "rgb(0, 0, 0)",
+      "padding": "2px",
+      "borderRadius": "4px",
+      "backgroundColor": "rgb(230, 245, 239)",
+      "fontWeight": "900",
+      "fontSize": "calc(0.7vw)"
+    }
+  }
+}

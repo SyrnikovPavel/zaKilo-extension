@@ -1,0 +1,21 @@
+{
+  "html": "<div class=\"css-6n4fw9\"><div class=\"chakra-stack css-1ovawgy\" itemprop=\"itemListElement\" itemscope=\"\" itemtype=\"https://schema.org/Product\" id=\"1\" data-qa=\"product-card-3655737\"><div class=\"css-i9gxme\"><a class=\"chakra-link css-vw88mn\" data-qa=\"product-card-link\" href=\"/product/shampinony-global-village-400g--3655737/\"><div class=\"chakra-stack css-10ru3ta\"><div class=\"chakra-stack css-171auh6\"><div class=\"css-12zque5\"><div class=\"chakra-aspect-ratio css-1ugx766\"><div class=\"css-1q8sdbx\"><img class=\"chakra-image css-1epf5lq\" src=\"https://catalog-images.x5static.net/product/1186740-main/320x320.jpeg\" alt=\"Шампиньоны Global Village 400г\" itemprop=\"image\"></div></div><div class=\"css-ie4ch9\"></div></div><div class=\"css-p5esxm\"><div class=\"css-lu70z\"><div class=\"ratingContainer_ratingContainer__H_oh5 css-k008qs\" itemprop=\"aggregateRating\" itemscope=\"\" itemtype=\"https://schema.org/AggregateRating\"><div class=\"css-nrs666\"><svg focusable=\"false\" aria-hidden=\"true\" class=\"chakra-icon css-18hahlf\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path fill-rule=\"evenodd\" d=\"M13.3621 2.56546C12.826 1.40315 11.174 1.40315 10.6379 2.56546L8.50501 7.18955L3.44814 7.78912C2.17705 7.93983 1.66657 9.51091 2.60632 10.38L6.345 13.8374L5.35257 18.832C5.10311 20.0875 6.43955 21.0585 7.55647 20.4333L12 17.946L16.4435 20.4333C17.5604 21.0585 18.8969 20.0875 18.6474 18.832L17.655 13.8374L21.3937 10.38C22.3334 9.51091 21.8229 7.93983 20.5518 7.78912L15.495 7.18955L13.3621 2.56546Z\" clip-rule=\"evenodd\"></path></svg></div><div class=\"css-1du2rtr\"><p type=\"caption\" class=\"css-1seh83q\">4,93</p><div class=\"seoElement_hidden__RpmQo\"><meta itemprop=\"ratingValue\" content=\"4.93\"></div><div class=\"seoElement_hidden__RpmQo\"><meta itemprop=\"ratingCount\" content=\"33426\"></div></div></div><div class=\"css-9ncz4i\"><p type=\"caption\" data-qa=\"product-card-title\" class=\"css-y50q0q\">Шампиньоны Global Village 400г</p></div><div class=\"seoElement_hidden__RpmQo\"><meta itemprop=\"name\" content=\"Шампиньоны Global Village 400г\"></div></div><p type=\"caption\" class=\"css-kh0jyy\">400 г</p></div></div><div itemprop=\"offers\" itemscope=\"\" itemtype=\"https://schema.org/Offer\" class=\"css-0\"><div class=\"css-1gnr8ln\"><span type=\"subtitle\" data-qa=\"price-tag-rubles\" class=\"css-gv6vdh\">179</span><meta itemprop=\"price\" content=\"179.99\"><span type=\"subtitle\" data-qa=\"price-tag-pennies\" class=\"css-1la2x8r\">99</span><span type=\"subtitle\" data-qa=\"price-tag-rubble-sign\" class=\"css-gv6vdh\"> ₽</span><meta itemprop=\"priceCurrency\" content=\"RUB\"></div></div></div></a></div><div data-qa=\"cart-button-container\" class=\"css-8atqhb\"><button type=\"button\" data-qa=\"cart-button-add-button\" data-state-loading=\"false\" class=\"chakra-button css-deo684\"><div class=\"css-4v7jzj\"><span type=\"subtitle\" class=\"css-smbjjj\">В корзину</span></div></button></div></div></div>",
+  "expectedParsedPrice": 180,
+  "expectedParsedQuantity": {
+    "unitLabel": "1 кг",
+    "multiplier": 2.5
+  },
+  "expectedUnitPrice": {
+    "price": 450,
+    "label": "1 кг",
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.5em",
+      "color": "rgb(0, 0, 0)",
+      "padding": "2px 6px",
+      "borderRadius": "4px",
+      "fontWeight": "900",
+      "fontSize": "calc(0.95vw)"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "html": "<div class=\"product-card\"><div class=\"product-card__content\"><div class=\"product-card__meta\"><div class=\"product-card__params\"><div class=\"product-card__pricing\">199&nbsp;₽/шт</div></div></div><div class=\"product-card__title-wrapper\"><a class=\"product-card__title product-card__title-link\" href=\"/cat/200/p/nabor-posudy\">Набор посуды</a></div><div class=\"product-card__control\"><div class=\"product-card__price\"><div class=\"price-new\"><span class=\"sr-only\">Цена</span>199&nbsp;₽</div></div></div></div></div>",
+  "expectedNoneUnitPrice": {
+    "styles": {
+      "display": "inline-block",
+      "marginLeft": "0.5em",
+      "color": "rgb(0, 0, 0)",
+      "padding": "2px 6px",
+      "borderRadius": "4px",
+      "fontWeight": "900",
+      "fontSize": "12px"
+    }
+  }
+}

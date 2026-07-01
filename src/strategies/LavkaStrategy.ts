@@ -7,10 +7,10 @@ export class LavkaStrategy extends ParserStrategy {
     super();
     this.strategyName = "Lavka";
     this.selectors = {
-      card: "[class*=p19kkpiw]",
+      card: '[data-testid="product-card"], [class*=p19kkpiw]',
       price:
-        "[class*=phcb3a1] [class*=b15aiivf][style*='color'], [class*=t18stym3][class*=bw441np][class*=r88klks][style*='color']",
-      name: "[class*=m12g4kzj]",
+        '[data-testid="price-text"], [class*=phcb3a1] [class*=b15aiivf][style*="color"], [class*=t18stym3][class*=bw441np][class*=r88klks][style*="color"]',
+      name: '[class*=extraText__], [class*=m12g4kzj]',
       unitPrice: '[data-testid="unit-price"]',
     };
   }
